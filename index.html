@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omi Harjani — Cloud Engineer & Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(255, 255, 255, 0.78);
+      --text: #0b1224;
+      --muted: #334155;
+      --accent: #0ea5e9;
+      --shadow: 0 22px 70px rgba(15, 23, 42, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.8), transparent 30%),
+                  radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.7), transparent 35%),
+                  radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.8), transparent 30%);
+      transition: background 600ms ease;
+    }
+
+    .season-pill {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    main {
+      width: min(960px, calc(100% - 40px));
+      padding: 36px;
+      border-radius: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.6), transparent 45%),
+                  radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.45), transparent 50%);
+      pointer-events: none;
+    }
+
+    header h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 4vw, 42px);
+      letter-spacing: -0.5px;
+    }
+
+    .profile {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 26px;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .controls {
+      display: none;
+    }
+
+    .lang-toggle {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+      cursor: pointer;
+      z-index: 2;
+    }
+    .lang-toggle:focus { outline: none; }
+
+    header p {
+      margin: 0;
+      max-width: 540px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .tags {
+      margin: 18px 0 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(14, 165, 233, 0.1);
+      color: #0b4c6b;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      border: 1px solid rgba(14, 165, 233, 0.22);
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing: 0.35px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .links, .projects {
+      margin: 24px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .link-card, .project-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+    }
+
+    .link-card:hover, .project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      border-color: rgba(14, 165, 233, 0.35);
+    }
+
+    .link-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(14, 165, 233, 0.12);
+      color: #0b4c6b;
+      border: 1px solid rgba(14, 165, 233, 0.2);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.25px;
+    }
+
+    .project-meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .aside {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--card-border);
+    }
+
+    footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .accent {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    @media (max-width: 840px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+      .season-pill {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+      }
+      .lang-toggle {
+        top: 12px;
+        left: 12px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      main {
+        padding: 22px;
+      }
+      .link-card, .project-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .avatar {
+        width: 74px;
+        height: 74px;
+        border-radius: 20px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+      }
+      header h1 {
+        font-size: 28px;
+      }
+      .season-pill, .lang-toggle {
+        padding: 8px 10px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="season-pill" id="season-pill">Season: --</div>
+  <main>
+    <div class="glow" aria-hidden="true"></div>
+    <section>
+      <header>
+        <div class="profile">
+          <img class="avatar" src="assets/pic.jpeg" alt="Portrait of Omi Harjani">
+          <div>
+            <h1 id="name">Omi Harjani</h1>
+            <div id="role" style="color: var(--muted); font-weight: 700;">Cloud & Platform Engineer · Tokyo, JP</div>
+            <div id="email" style="color: var(--muted); font-size: 14px;">omiharjani@gmail.com</div>
+          </div>
+        </div>
+        <p>
+          <span id="summary">
+            Cloud & platform engineer with 8+ years across AWS and Azure, specializing in IaC, CI/CD automation,
+            and container platforms. Currently a cloud engineer at MetLife Japan, improving production reliability while building AI-powered tools
+            like Uttayo and Gomi Helper after hours.
+          </span>
+          <br><br>
+          <strong id="growth">Always learning and implementing—continuously testing something new.</strong>
+        </p>
+      </header>
+
+      <div class="tags">
+        <span class="tag" id="tag1">AWS / Azure</span>
+        <span class="tag" id="tag2">Terraform & IaC</span>
+        <span class="tag" id="tag3">CI/CD Automation</span>
+        <span class="tag" id="tag4">Containers</span>
+        <span class="tag" id="tag5">AI Side Projects</span>
+      </div>
+
+      <div class="links">
+        <a class="section-title" id="reach" href="/qr/" style="text-decoration: none; color: inherit;">Reach me</a>
+        <a class="link-card" href="http://linkedin.com/in/supernerd" target="_blank" rel="noopener noreferrer">
+          <span class="link-meta" id="linkedin">LinkedIn</span>
+          <span class="pill" id="connect">Connect</span>
+        </a>
+        <a class="link-card" href="https://github.com/omijh" target="_blank" rel="noopener noreferrer">
+          <span class="link-meta" id="github">GitHub</span>
+          <span class="pill" id="code">Code</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div>
+        <div class="section-title" id="projects">Projects</div>
+        <a class="project-card" href="https://uttayo.com" target="_blank" rel="noopener noreferrer">
+          <span class="link-meta">Uttayo</span>
+          <span class="project-meta" id="uttayo-desc">Second-hand marketplace in Japan</span>
+        </a>
+        <a class="project-card" href="https://gomihelper.com" target="_blank" rel="noopener noreferrer">
+          <span class="link-meta">Gomi Helper</span>
+          <span class="project-meta" id="gomi-desc">Trash pickup schedules for Japan</span>
+        </a>
+      </div>
+
+      <div class="aside">
+        <div class="section-title" id="currently">Currently</div>
+        <div class="project-meta" id="current-text" style="line-height: 1.6;">
+          Exploring how lightweight assistants can simplify daily decisions, from creative workflows to sustainability habits.
+          Always open to collaborations that value pace, curiosity, and clear impact.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const seasons = {
+      spring: {
+        en: 'Spring — Japan',
+        ja: '春 — 日本',
+        months: [3, 4, 5],
+        gradient: 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)'
+      },
+      summer: {
+        en: 'Summer — Japan',
+        ja: '夏 — 日本',
+        months: [6, 7, 8],
+        gradient: 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)'
+      },
+      autumn: {
+        en: 'Autumn — Japan',
+        ja: '秋 — 日本',
+        months: [9, 10, 11],
+        gradient: 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)'
+      },
+      winter: {
+        en: 'Winter — Japan',
+        ja: '冬 — 日本',
+        months: [12, 1, 2],
+        gradient: 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)'
+      }
+    };
+
+    const translations = {
+      en: {
+        name: 'Omi Harjani',
+        role: 'Cloud & Platform Engineer · Tokyo, JP',
+        summary: 'Cloud & platform engineer with 8+ years across AWS and Azure, specializing in IaC, CI/CD automation, and container platforms. Currently a cloud engineer at MetLife Japan, improving production reliability while building AI-powered tools like Uttayo and Gomi Helper after hours.',
+        growth: 'Always learning and implementing—continuously testing something new.',
+        tag1: 'AWS / Azure',
+        tag2: 'Terraform & IaC',
+        tag3: 'CI/CD Automation',
+        tag4: 'Containers',
+        tag5: 'AI Side Projects',
+        reach: 'Reach me',
+        linkedin: 'LinkedIn',
+        github: 'GitHub',
+        connect: 'Connect',
+        code: 'Code',
+        projects: 'Projects',
+        uttayo: 'Second-hand marketplace in Japan',
+        gomi: 'Trash pickup schedules for Japan',
+        currently: 'Currently',
+        currentText: 'Exploring how lightweight assistants can simplify daily decisions, from creative workflows to sustainability habits. Always open to collaborations that value pace, curiosity, and clear impact.'
+      },
+      ja: {
+        name: 'Omi Harjani',
+        role: 'クラウド／プラットフォームエンジニア・東京',
+        summary: 'AWS と Azure で 8 年以上の経験。IaC、CI/CD 自動化、コンテナ基盤が専門。MetLife Japan でクラウドエンジニアとして本番信頼性を高めつつ、Uttayo や Gomi Helper などの AI ツールを開発中。',
+        growth: '常に学び、実装し、新しいことを試しています。',
+        tag1: 'AWS / Azure',
+        tag2: 'Terraform と IaC',
+        tag3: 'CI/CD 自動化',
+        tag4: 'コンテナ',
+        tag5: 'AI サイドプロジェクト',
+        reach: '連絡先',
+        linkedin: 'LinkedIn',
+        github: 'GitHub',
+        connect: 'つながる',
+        code: 'コード',
+        projects: 'プロジェクト',
+        uttayo: '日本向けセカンドハンド・マーケット',
+        gomi: '日本のごみ収集スケジュール',
+        currently: '現在',
+        currentText: '軽量なアシスタントが日常の意思決定をどう楽にできるかを探求中。スピードと好奇心、明確なインパクトを重視するコラボを歓迎します。'
+      }
+    };
+
+    const pill = document.getElementById('season-pill');
+    const langToggle = document.createElement('button');
+    langToggle.id = 'lang-toggle';
+    langToggle.className = 'lang-toggle';
+    langToggle.type = 'button';
+    langToggle.textContent = '日本語 / EN';
+    document.body.appendChild(langToggle);
+    let currentLang = 'en';
+
+    function applySeason(key) {
+      const season = seasons[key];
+      if (!season) return;
+      document.body.style.background = season.gradient;
+      pill.textContent = season[currentLang];
+      currentSeason = key;
+    }
+
+    function detectSeason() {
+      const month = new Date().getMonth() + 1;
+      return (
+        Object.entries(seasons).find(([, value]) => value.months.includes(month))?.[0] ||
+        'spring'
+      );
+    }
+
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+      currentLang = lang;
+      document.getElementById('name').textContent = t.name;
+      document.getElementById('role').textContent = t.role;
+      document.getElementById('summary').textContent = t.summary;
+      document.getElementById('growth').textContent = t.growth;
+      document.getElementById('tag1').textContent = t.tag1;
+      document.getElementById('tag2').textContent = t.tag2;
+      document.getElementById('tag3').textContent = t.tag3;
+      document.getElementById('tag4').textContent = t.tag4;
+      document.getElementById('tag5').textContent = t.tag5;
+      document.getElementById('reach').textContent = t.reach;
+      document.getElementById('linkedin').textContent = t.linkedin;
+      document.getElementById('github').textContent = t.github;
+      document.getElementById('connect').textContent = t.connect;
+      document.getElementById('code').textContent = t.code;
+      document.getElementById('projects').textContent = t.projects;
+      document.getElementById('uttayo-desc').textContent = t.uttayo;
+      document.getElementById('gomi-desc').textContent = t.gomi;
+      document.getElementById('currently').textContent = t.currently;
+      document.getElementById('current-text').textContent = t.currentText;
+      applySeason(currentSeason);
+    }
+
+    langToggle.addEventListener('click', () => {
+      const next = currentLang === 'en' ? 'ja' : 'en';
+      applyLanguage(next);
+    });
+
+    // initialize
+    let currentSeason = detectSeason();
+    applyLanguage('en');
+    applySeason(currentSeason);
+  </script>
+</body>
+</html>

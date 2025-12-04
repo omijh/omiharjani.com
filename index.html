@@ -15,10 +15,10 @@
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-right: env(safe-area-inset-right, 0px);
       --safe-left: env(safe-area-inset-left, 0px);
-      --card-bg: rgba(255, 255, 255, 0.92);
-      --card-border: rgba(255, 255, 255, 0.78);
-      --text: #0b1224;
-      --muted: #334155;
+      --card-bg: rgba(255, 255, 255, 0.97);
+      --card-border: rgba(255, 255, 255, 0.88);
+      --text: #0a0c14;
+      --muted: #1c2533;
       --accent: #0ea5e9;
       --shadow: 0 22px 70px rgba(15, 23, 42, 0.18);
     }
@@ -66,14 +66,15 @@
     .glow {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.6), transparent 45%),
-                  radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.45), transparent 50%);
+      background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.45), transparent 45%),
+                  radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.32), transparent 50%);
       pointer-events: none;
     }
 
     header h1 {
       margin: 0 0 12px;
       font-size: clamp(32px, 4vw, 42px);
+      font-weight: 800;
       letter-spacing: -0.5px;
     }
 
@@ -118,9 +119,9 @@
     header p {
       margin: 0;
       max-width: 540px;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 16px;
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 17px;
     }
 
     .tags {
@@ -277,8 +278,8 @@
           <img class="avatar" src="assets/pic.jpeg" alt="Portrait of Omi Harjani">
           <div>
             <h1 id="name">Omi Harjani</h1>
-            <div id="role" style="color: var(--muted); font-weight: 700;">Cloud & Platform Engineer · Tokyo, JP</div>
-            <div id="email" style="color: var(--muted); font-size: 14px;">omiharjani@gmail.com</div>
+            <div id="role" style="color: var(--text); font-weight: 700;">Cloud & Platform Engineer · Tokyo, JP</div>
+            <div id="email" style="color: var(--text); font-size: 14px;">omiharjani@gmail.com</div>
           </div>
         </div>
         <p>

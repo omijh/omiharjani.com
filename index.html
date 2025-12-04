@@ -12,7 +12,12 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <button class="lang-toggle" id="lang-toggle" type="button">EN / 日本語</button>
+  <!-- Updated: clearer language toggle with active states -->
+  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
+    <span class="lang en active">EN</span>
+    <span class="divider">/</span>
+    <span class="lang ja">日本語</span>
+  </button>
   <header class="site-header">
     <div class="hero container fade-in">
       <div class="hero__text">
@@ -41,12 +46,14 @@
           <img src="assets/pic.jpeg" alt="Portrait of Omi Harjani" class="avatar">
           <div>
             <div class="label" id="currently">Currently</div>
-            <div class="profile-line" id="profile-line1">Cloud engineer at MetLife Japan</div>
-            <div class="profile-line" id="profile-line2">Always learning, testing new ideas</div>
+            <div class="profile-line strong" id="profile-line1">Cloud Engineer at MetLife Japan</div>
+            <div class="profile-line" id="profile-line2">Working on Azure, containers, and automation for large-scale systems.</div>
+            <div class="profile-line" id="profile-line3">Always learning, testing new ideas.</div>
           </div>
         </div>
       </div>
     </div>
+    <div class="container section-divider"></div>
   </header>
 
   <main>
@@ -54,10 +61,15 @@
       <div class="section__header">
         <h2 id="about">About</h2>
       </div>
-      <p class="body-text" id="about-text">
-        Builder mindset. Cloud engineer by day, AI product maker by night. Currently focused on AI-powered tools and a second-hand marketplace in Japan called Uttayo. Happy to collaborate on cloud, AI, or fast-moving product experiments.
-      </p>
+      <!-- Updated: About sentences split per line -->
+      <div class="body-text about-lines">
+        <span id="about-line1">Builder mindset.</span>
+        <span id="about-line2">Cloud engineer by day, AI product maker by night.</span>
+        <span id="about-line3">Focused on AI-powered tools and Uttayo; happy to collaborate on cloud, AI, or fast-moving experiments.</span>
+        <span id="about-line4">Outside of work, I enjoy building side projects, learning Japanese, and exploring Tokyo neighborhoods.</span>
+      </div>
     </section>
+    <div class="container section-divider"></div>
 
     <section class="section container fade-in" aria-labelledby="what-i-do">
       <div class="section__header">
@@ -73,6 +85,7 @@
         <span class="pill" id="pill7">AWS</span>
       </div>
     </section>
+    <div class="container section-divider"></div>
 
     <section class="section container fade-in" aria-labelledby="projects">
       <div class="section__header">
@@ -95,13 +108,15 @@
         </article>
       </div>
     </section>
+    <div class="container section-divider"></div>
+
   </main>
 
   <footer class="footer fade-in">
     <div class="container footer__content">
       <div>
         <p class="footer-kicker" id="footer-kicker">Let’s connect.</p>
-        <p class="footer-text" id="footer-text">Always happy to talk cloud, AI, and startups.</p>
+        <p class="footer-text" id="footer-text">Always happy to talk cloud, AI, startups, and new experiments.</p>
       </div>
     </div>
     <div class="container footer__bottom">

@@ -37,7 +37,7 @@ a {
 }
 
 .site-header {
-  padding: 38px 0 10px;
+  padding: 44px 0 12px; /* Updated spacing */
 }
 
 .hero {
@@ -57,7 +57,7 @@ a {
 .subtitle {
   font-weight: 800;
   color: var(--text);
-  font-size: 18px;
+  font-size: 19px; /* Updated hierarchy */
 }
 
 .location {
@@ -143,12 +143,14 @@ a {
 }
 
 .section {
-  padding: 28px 0;
+  padding: 32px 0; /* Updated spacing */
 }
 
 .section__header h2 {
-  margin: 0 0 14px;
-  font-size: 22px;
+  margin: 0 0 16px;
+  font-size: 23px; /* Updated heading weight */
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
 .body-text {
@@ -157,6 +159,11 @@ a {
   line-height: 1.7;
   color: var(--muted);
   font-size: 17px;
+}
+
+.about-lines span {
+  display: block;
+  margin-bottom: 6px;
 }
 
 .pill-grid {
@@ -236,7 +243,7 @@ a {
 }
 
 .footer {
-  padding: 32px 0 18px;
+  padding: 40px 0 22px; /* Updated spacing */
 }
 
 .footer__content {
@@ -256,17 +263,6 @@ a {
 .footer-text {
   margin: 4px 0 0;
   color: var(--muted);
-}
-
-.footer-links {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.footer-links a {
-  font-weight: 700;
-  color: var(--text);
 }
 
 .footer__bottom {
@@ -299,10 +295,43 @@ a {
   opacity: 1;
 }
 
+.section-divider {
+  border-top: 1px solid rgba(15, 23, 42, 0.06); /* Updated subtle divider */
+  margin: 6px auto;
+}
+
+.qr-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.qr-card img {
+  width: 220px;
+  height: 220px;
+  border-radius: 12px;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.qr-caption {
+  margin: 0;
+  color: var(--muted);
+}
+
+.profile-line.strong {
+  font-weight: 800;
+}
+
 .lang-toggle {
   position: fixed;
   top: 16px;
-  left: 16px;
+  right: 16px;
   padding: 8px 12px;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -321,12 +350,31 @@ a {
   box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14);
 }
 
+.lang-toggle .lang {
+  opacity: 0.6;
+  font-weight: 700;
+}
+
+.lang-toggle .lang.active {
+  opacity: 1;
+  font-weight: 900;
+}
+
+.lang-toggle .divider {
+  opacity: 0.4;
+  margin: 0 6px;
+}
+
 @media (max-width: 840px) {
   .hero {
     grid-template-columns: 1fr;
   }
   .hero__card {
     order: -1;
+  }
+  .lang-toggle {
+    top: 12px;
+    right: 12px;
   }
 }
 
@@ -343,5 +391,12 @@ a {
   }
   .container {
     width: min(1100px, calc(100% - 26px));
+  }
+  .qr-card img {
+    width: 180px;
+    height: 180px;
+  }
+  .section {
+    padding: 26px 0;
   }
 }

@@ -49,11 +49,16 @@ const translations = {
     subtitle: 'Cloud Engineer • AI Builder • Founder of Uttayo',
     location: 'Tokyo, Japan',
     currently: 'Currently',
-    profile1: 'Cloud engineer at MetLife Japan',
-    profile2: 'Always learning, testing new ideas',
+    profile1: 'Cloud Engineer at MetLife Japan',
+    profile2: 'Working on Azure, containers, and automation for large-scale systems.',
+    profile3: 'Always learning, testing new ideas.',
     aboutTitle: 'About',
-    aboutText:
-      'Builder mindset. Cloud engineer by day, AI product maker by night. Currently focused on AI-powered tools and a second-hand marketplace in Japan called Uttayo. Happy to collaborate on cloud, AI, or fast-moving product experiments.',
+    aboutLines: [
+      'Builder mindset.',
+      'Cloud engineer by day, AI product maker by night.',
+      'Focused on AI-powered tools and Uttayo; happy to collaborate on cloud, AI, or fast-moving experiments.',
+      'Outside of work, I enjoy building side projects, learning Japanese, and exploring Tokyo neighborhoods.',
+    ],
     whatTitle: 'What I Do',
     pills: ['Azure', 'AKS & Containers', 'Terraform & IaC', 'Next.js & React', 'Supabase', 'AI / LLM Apps', 'AWS'],
     projectsTitle: 'Projects',
@@ -71,10 +76,15 @@ const translations = {
     location: '東京、日本',
     currently: '現在',
     profile1: 'MetLife Japan のクラウドエンジニア',
-    profile2: '常に学び、新しいことを試しています',
+    profile2: 'Azure・コンテナ・自動化を担当',
+    profile3: '常に学び、新しいことを試しています',
     aboutTitle: '自己紹介',
-    aboutText:
-      'ビルダー気質。昼はクラウドエンジニア、夜はAIプロダクトづくり。今はAIを活用したツールと、日本向けセカンドハンドマーケット「Uttayo」に注力。クラウド、AI、スピード感ある実験でご一緒できます。',
+    aboutLines: [
+      'ビルダー気質。',
+      '昼はクラウドエンジニア、夜はAIプロダクトづくり。',
+      '今はAIを活用したツールと、日本向けセカンドハンドマーケット「Uttayo」に注力。クラウド、AI、スピード感ある実験でご一緒できます。',
+      '仕事以外ではサイドプロジェクト、日本語学習、東京の街歩きを楽しんでいます。',
+    ],
     whatTitle: '得意分野',
     pills: ['Azure', 'AKS とコンテナ', 'Terraform と IaC', 'Next.js と React', 'Supabase', 'AI / LLM アプリ', 'AWS'],
     projectsTitle: 'プロジェクト',
@@ -92,13 +102,22 @@ function applyLanguage(lang) {
   const t = translations[lang];
   if (!t) return;
   document.getElementById('eyebrow').textContent = t.eyebrow;
-  document.getElementById('subtitle').textContent = t.subtitle;
-  document.getElementById('location').textContent = t.location;
-  document.getElementById('currently').textContent = t.currently;
-  document.getElementById('profile-line1').textContent = t.profile1;
-  document.getElementById('profile-line2').textContent = t.profile2;
+    document.getElementById('subtitle').textContent = t.subtitle;
+    document.getElementById('location').textContent = t.location;
+    document.getElementById('currently').textContent = t.currently;
+    document.getElementById('profile-line1').textContent = t.profile1;
+    document.getElementById('profile-line2').textContent = t.profile2;
+    document.getElementById('profile-line3').textContent = t.profile3;
   document.getElementById('about').textContent = t.aboutTitle;
-  document.getElementById('about-text').textContent = t.aboutText;
+  const aboutLineEls = [
+    document.getElementById('about-line1'),
+    document.getElementById('about-line2'),
+    document.getElementById('about-line3'),
+    document.getElementById('about-line4'),
+  ];
+  aboutLineEls.forEach((el, idx) => {
+    if (el && t.aboutLines[idx]) el.textContent = t.aboutLines[idx];
+  });
   document.getElementById('what-i-do').textContent = t.whatTitle;
   document.getElementById('projects').textContent = t.projectsTitle;
   document.getElementById('uttayo-desc').textContent = t.uttayoDesc;
@@ -114,6 +133,19 @@ function applyLanguage(lang) {
     const el = document.getElementById(id);
     if (el && t.pills[idx]) el.textContent = t.pills[idx];
   });
+
+  // Toggle active state visuals
+  const enSpan = document.querySelector('#lang-toggle .en');
+  const jaSpan = document.querySelector('#lang-toggle .ja');
+  if (enSpan && jaSpan) {
+    if (lang === 'en') {
+      enSpan.classList.add('active');
+      jaSpan.classList.remove('active');
+    } else {
+      jaSpan.classList.add('active');
+      enSpan.classList.remove('active');
+    }
+  }
 }
 
 // Fade-in observer

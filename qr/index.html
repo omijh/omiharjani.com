@@ -10,6 +10,9 @@
   <style>
     :root {
       color-scheme: light;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
       --card-bg: rgba(255, 255, 255, 0.92);
       --card-border: rgba(255, 255, 255, 0.78);
       --text: #0b1224;
@@ -21,7 +24,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 20px;
+      padding: calc(20px + var(--safe-top)) calc(20px + var(--safe-right)) 20px calc(20px + var(--safe-left));
       font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: var(--text);
       display: flex;
@@ -33,8 +36,8 @@
     }
     .lang-toggle {
       position: fixed;
-      top: 18px;
-      left: 18px;
+      top: calc(18px + var(--safe-top));
+      left: calc(18px + var(--safe-left));
       padding: 10px 14px;
       border-radius: 12px;
       border: 1px solid var(--card-border);
@@ -97,7 +100,7 @@
       box-shadow: 0 10px 22px rgba(14, 165, 233, 0.15);
     }
     @media (max-width: 540px) {
-      body { padding: 16px; align-items: flex-start; }
+      body { padding: calc(16px + var(--safe-top)) calc(16px + var(--safe-right)) 16px calc(16px + var(--safe-left)); align-items: flex-start; }
       main { padding: 24px; }
       .qr-wrap img { width: 220px; height: 220px; }
       h1 { font-size: 22px; }

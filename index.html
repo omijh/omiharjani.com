@@ -3,480 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Omi Harjani — Cloud Engineer & Builder</title>
+  <title>Omi Harjani — Cloud Engineer & AI Builder</title>
   <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="assets/favicon-spring.svg">
   <link rel="apple-touch-icon" href="assets/favicon-spring.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      color-scheme: light;
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-right: env(safe-area-inset-right, 0px);
-      --safe-left: env(safe-area-inset-left, 0px);
-      --card-bg: rgba(255, 255, 255, 0.97);
-      --card-border: rgba(255, 255, 255, 0.88);
-      --text: #0a0c14;
-      --muted: #1c2533;
-      --accent: #0ea5e9;
-      --shadow: 0 22px 70px rgba(15, 23, 42, 0.18);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: calc(24px + var(--safe-top)) calc(24px + var(--safe-right)) 24px calc(24px + var(--safe-left));
-      font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: auto;
-      background: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.8), transparent 30%),
-                  radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.7), transparent 35%),
-                  radial-gradient(circle at 50% 90%, rgba(255, 255, 255, 0.8), transparent 30%);
-      transition: background 600ms ease;
-    }
-
-    .season-pill {
-      display: none;
-    }
-
-    main {
-      width: min(960px, calc(100% - 40px));
-      padding: 36px;
-      border-radius: 28px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.45), transparent 45%),
-                  radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.32), transparent 50%);
-      pointer-events: none;
-    }
-
-    header h1 {
-      margin: 0 0 12px;
-      font-size: clamp(32px, 4vw, 42px);
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-
-    .profile {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 26px;
-      object-fit: cover;
-      border: 3px solid rgba(255, 255, 255, 0.92);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
-      background: rgba(255, 255, 255, 0.85);
-    }
-
-    .controls {
-      display: none;
-    }
-
-    .lang-toggle {
-      position: fixed;
-      top: calc(18px + var(--safe-top));
-      left: calc(18px + var(--safe-left));
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.86);
-      color: var(--text);
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
-      cursor: pointer;
-      z-index: 2;
-    }
-    .lang-toggle:focus { outline: none; }
-
-    header p {
-      margin: 0;
-      max-width: 540px;
-      color: var(--text);
-      line-height: 1.7;
-      font-size: 17px;
-    }
-
-    .tags {
-      margin: 18px 0 0;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(14, 165, 233, 0.1);
-      color: #0b4c6b;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      border: 1px solid rgba(14, 165, 233, 0.22);
-    }
-
-    .section-title {
-      margin: 0 0 10px;
-      font-size: 14px;
-      letter-spacing: 0.35px;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .links, .projects {
-      margin: 24px 0 0;
-      display: grid;
-      gap: 12px;
-    }
-
-    .link-card, .project-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      text-decoration: none;
-      color: var(--text);
-      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
-    }
-
-    .link-card:hover, .project-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
-      border-color: rgba(14, 165, 233, 0.35);
-    }
-
-    .link-meta {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      font-weight: 700;
-    }
-
-    .pill {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(14, 165, 233, 0.12);
-      color: #0b4c6b;
-      border: 1px solid rgba(14, 165, 233, 0.2);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.25px;
-    }
-
-    .project-meta {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .grid {
-      display: grid;
-      gap: 20px;
-    }
-
-    .aside {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid var(--card-border);
-    }
-
-    footer {
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .accent {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    @media (max-width: 840px) {
-      body {
-        align-items: flex-start;
-      }
-      main {
-        grid-template-columns: 1fr;
-      }
-      .season-pill {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-      }
-      .lang-toggle {
-        top: 12px;
-        left: 12px;
-      }
-    }
-
-    @media (max-width: 540px) {
-      main {
-        padding: 22px;
-      }
-      body {
-        padding: calc(18px + var(--safe-top)) calc(18px + var(--safe-right)) 18px calc(18px + var(--safe-left));
-        align-items: flex-start;
-      }
-      .link-card, .project-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .avatar {
-        width: 74px;
-        height: 74px;
-        border-radius: 20px;
-        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
-      }
-      header h1 {
-        font-size: 28px;
-      }
-      .season-pill, .lang-toggle {
-        padding: 8px 10px;
-        font-size: 13px;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="season-pill" id="season-pill">Season: --</div>
-  <main>
-    <div class="glow" aria-hidden="true"></div>
-    <section>
-      <header>
+  <button class="lang-toggle" id="lang-toggle" type="button">EN / 日本語</button>
+  <header class="site-header">
+    <div class="hero container fade-in">
+      <div class="hero__text">
+        <p class="eyebrow" id="eyebrow">Building things at the intersection of cloud, AI, and startups.</p>
+        <h1 id="name">Omi Harjani</h1>
+        <div class="subtitle" id="subtitle">Cloud Engineer • AI Builder • Founder of Uttayo</div>
+        <div class="location" id="location">Tokyo, Japan</div>
+        <div class="socials" aria-label="Social links">
+          <a class="icon-link" href="https://www.linkedin.com/in/supernerd" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.4 3.5a1.9 1.9 0 1 1-3.8 0 1.9 1.9 0 0 1 3.8 0ZM1.8 8.2h3.5V22H1.8zM8.6 8.2h3.3v1.9h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5V22h-3.6v-6.1c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3V22H8.6z"></path></svg>
+          </a>
+          <a class="icon-link" href="https://github.com/omijh" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.7.5.6 5.6.6 12c0 5.1 3.3 9.5 7.9 11 .6.1.8-.3.8-.6v-2c-3.2.7-3.8-1.6-3.8-1.6-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1.9.9 2.8.9 1.4 0 2.5-.3 3-.6.1-.7.4-1.1.7-1.3-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.7 5.6-5.3 5.9.4.3.8 1 .8 2.1v3c0 .3.2.7.8.6 4.6-1.5 7.9-5.9 7.9-11C23.4 5.6 18.3.5 12 .5Z"></path></svg>
+          </a>
+          <a class="icon-link" href="mailto:omiharjani@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 4h17a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13A1.5 1.5 0 0 1 3.5 4Zm0 2.2V18h17V6.2L12 12.5 3.5 6.2Zm1.2-1.7 7.3 5.3 7.3-5.3h-14.6Z"></path></svg>
+          </a>
+          <a class="icon-link" href="https://x.com/omiharjani" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.3 8.4L22.8 22h-5.7l-4.5-5.9L6.5 22H2.3l7.8-9-7.4-9h5.8l4 5.3L18.9 2Zm-2 17.9h1.6L7.2 4.1H5.4l11.5 15.8Z"></path></svg>
+          </a>
+          <a class="secret-link" href="/qr/" aria-label="QR card">QR</a>
+        </div>
+      </div>
+      <div class="hero__card">
         <div class="profile">
-          <img class="avatar" src="assets/pic.jpeg" alt="Portrait of Omi Harjani">
+          <img src="assets/pic.jpeg" alt="Portrait of Omi Harjani" class="avatar">
           <div>
-            <h1 id="name">Omi Harjani</h1>
-            <div id="role" style="color: var(--text); font-weight: 700;">Cloud & Platform Engineer · Tokyo, JP</div>
-            <div id="email" style="color: var(--text); font-size: 14px;">omiharjani@gmail.com</div>
+            <div class="label" id="currently">Currently</div>
+            <div class="profile-line" id="profile-line1">Cloud engineer at MetLife Japan</div>
+            <div class="profile-line" id="profile-line2">Always learning, testing new ideas</div>
           </div>
         </div>
-        <p>
-          <span id="summary">
-            Cloud & platform engineer with 8+ years across AWS and Azure, specializing in IaC, CI/CD automation,
-            and container platforms. Currently a cloud engineer at MetLife Japan, improving production reliability while building AI-powered tools
-            like Uttayo and Gomi Helper after hours.
-          </span>
-          <br><br>
-          <strong id="growth">Always learning and implementing—continuously testing something new.</strong>
-        </p>
-      </header>
-
-      <div class="tags">
-        <span class="tag" id="tag1">AWS / Azure</span>
-        <span class="tag" id="tag2">Terraform & IaC</span>
-        <span class="tag" id="tag3">CI/CD Automation</span>
-        <span class="tag" id="tag4">Containers</span>
-        <span class="tag" id="tag5">AI Side Projects</span>
       </div>
+    </div>
+  </header>
 
-      <div class="links">
-        <a class="section-title" id="reach" href="/qr/" style="text-decoration: none; color: inherit;">Reach me</a>
-        <a class="link-card" href="http://linkedin.com/in/supernerd" target="_blank" rel="noopener noreferrer">
-          <span class="link-meta" id="linkedin">LinkedIn</span>
-          <span class="pill" id="connect">Connect</span>
-        </a>
-        <a class="link-card" href="https://github.com/omijh" target="_blank" rel="noopener noreferrer">
-          <span class="link-meta" id="github">GitHub</span>
-          <span class="pill" id="code">Code</span>
-        </a>
+  <main>
+    <section class="section container fade-in" aria-labelledby="about">
+      <div class="section__header">
+        <h2 id="about">About</h2>
+      </div>
+      <p class="body-text" id="about-text">
+        Builder mindset. Cloud engineer by day, AI product maker by night. Currently focused on AI-powered tools and a second-hand marketplace in Japan called Uttayo. Happy to collaborate on cloud, AI, or fast-moving product experiments.
+      </p>
+    </section>
+
+    <section class="section container fade-in" aria-labelledby="what-i-do">
+      <div class="section__header">
+        <h2 id="what-i-do">What I Do</h2>
+      </div>
+      <div class="pill-grid">
+        <span class="pill" id="pill1">Azure</span>
+        <span class="pill" id="pill2">AKS & Containers</span>
+        <span class="pill" id="pill3">Terraform & IaC</span>
+        <span class="pill" id="pill4">Next.js & React</span>
+        <span class="pill" id="pill5">Supabase</span>
+        <span class="pill" id="pill6">AI / LLM Apps</span>
+        <span class="pill" id="pill7">AWS</span>
       </div>
     </section>
 
-    <section class="grid">
-      <div>
-        <div class="section-title" id="projects">Projects</div>
-        <a class="project-card" href="https://uttayo.com" target="_blank" rel="noopener noreferrer">
-          <span class="link-meta">Uttayo</span>
-          <span class="project-meta" id="uttayo-desc">Second-hand marketplace in Japan</span>
-        </a>
-        <a class="project-card" href="https://gomihelper.com" target="_blank" rel="noopener noreferrer">
-          <span class="link-meta">Gomi Helper</span>
-          <span class="project-meta" id="gomi-desc">Trash pickup schedules for Japan</span>
-        </a>
+    <section class="section container fade-in" aria-labelledby="projects">
+      <div class="section__header">
+        <h2 id="projects">Projects</h2>
       </div>
-
-      <div class="aside">
-        <div class="section-title" id="currently">Currently</div>
-        <div class="project-meta" id="current-text" style="line-height: 1.6;">
-          Exploring how lightweight assistants can simplify daily decisions, from creative workflows to sustainability habits.
-          Always open to collaborations that value pace, curiosity, and clear impact.
-        </div>
+      <div class="projects">
+        <article class="card project-card">
+          <div>
+            <h3>Uttayo</h3>
+            <p id="uttayo-desc">A bilingual second-hand goods platform in Japan with AI-assisted pricing and an ultra-simple listing flow.</p>
+          </div>
+          <a class="ghost" href="https://uttayo.com" target="_blank" rel="noopener noreferrer" id="uttayo-btn">View project</a>
+        </article>
+        <article class="card project-card">
+          <div>
+            <h3>GomiHelper</h3>
+            <p id="gomi-desc">A simple site that helps residents check trash day schedules in Japan, with a friendly mascot and clean UI.</p>
+          </div>
+          <a class="ghost" href="https://gomihelper.com" target="_blank" rel="noopener noreferrer" id="gomi-btn">View project</a>
+        </article>
       </div>
     </section>
   </main>
 
-  <script>
-    const seasons = {
-      spring: {
-        en: 'Spring — Japan',
-        ja: '春 — 日本',
-        months: [3, 4, 5],
-        gradient: 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)'
-      },
-      summer: {
-        en: 'Summer — Japan',
-        ja: '夏 — 日本',
-        months: [6, 7, 8],
-        gradient: 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)'
-      },
-      autumn: {
-        en: 'Autumn — Japan',
-        ja: '秋 — 日本',
-        months: [9, 10, 11],
-        gradient: 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)'
-      },
-      winter: {
-        en: 'Winter — Japan',
-        ja: '冬 — 日本',
-        months: [12, 1, 2],
-        gradient: 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)'
-      }
-    };
+  <footer class="footer fade-in">
+    <div class="container footer__content">
+      <div>
+        <p class="footer-kicker" id="footer-kicker">Let’s connect.</p>
+        <p class="footer-text" id="footer-text">Always happy to talk cloud, AI, and startups.</p>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <small>© <span id="year"></span> Omi Harjani</small>
+    </div>
+  </footer>
 
-    const translations = {
-      en: {
-        name: 'Omi Harjani',
-        role: 'Cloud & Platform Engineer · Tokyo, JP',
-        summary: 'Cloud & platform engineer with 8+ years across AWS and Azure, specializing in IaC, CI/CD automation, and container platforms. Currently a cloud engineer at MetLife Japan, improving production reliability while building AI-powered tools like Uttayo and Gomi Helper after hours.',
-        growth: 'Always learning and implementing—continuously testing something new.',
-        tag1: 'AWS / Azure',
-        tag2: 'Terraform & IaC',
-        tag3: 'CI/CD Automation',
-        tag4: 'Containers',
-        tag5: 'AI Side Projects',
-        reach: 'Reach me',
-        linkedin: 'LinkedIn',
-        github: 'GitHub',
-        connect: 'Connect',
-        code: 'Code',
-        projects: 'Projects',
-        uttayo: 'Second-hand marketplace in Japan',
-        gomi: 'Trash pickup schedules for Japan',
-        currently: 'Currently',
-        currentText: 'Exploring how lightweight assistants can simplify daily decisions, from creative workflows to sustainability habits. Always open to collaborations that value pace, curiosity, and clear impact.'
-      },
-      ja: {
-        name: 'Omi Harjani',
-        role: 'クラウド／プラットフォームエンジニア・東京',
-        summary: 'AWS と Azure で 8 年以上の経験。IaC、CI/CD 自動化、コンテナ基盤が専門。MetLife Japan でクラウドエンジニアとして本番信頼性を高めつつ、Uttayo や Gomi Helper などの AI ツールを開発中。',
-        growth: '常に学び、実装し、新しいことを試しています。',
-        tag1: 'AWS / Azure',
-        tag2: 'Terraform と IaC',
-        tag3: 'CI/CD 自動化',
-        tag4: 'コンテナ',
-        tag5: 'AI サイドプロジェクト',
-        reach: '連絡先',
-        linkedin: 'LinkedIn',
-        github: 'GitHub',
-        connect: 'つながる',
-        code: 'コード',
-        projects: 'プロジェクト',
-        uttayo: '日本向けセカンドハンド・マーケット',
-        gomi: '日本のごみ収集スケジュール',
-        currently: '現在',
-        currentText: '軽量なアシスタントが日常の意思決定をどう楽にできるかを探求中。スピードと好奇心、明確なインパクトを重視するコラボを歓迎します。'
-      }
-    };
-
-    const pill = document.getElementById('season-pill');
-    const langToggle = document.createElement('button');
-    langToggle.id = 'lang-toggle';
-    langToggle.className = 'lang-toggle';
-    langToggle.type = 'button';
-    langToggle.textContent = '日本語 / EN';
-    document.body.appendChild(langToggle);
-    let currentLang = 'en';
-
-    function setFavicon(key) {
-      const favicon = document.getElementById('favicon');
-      if (!favicon) return;
-      favicon.href = `assets/favicon-${key}.svg`;
-    }
-
-    function applySeason(key) {
-      const season = seasons[key];
-      if (!season) return;
-      document.body.style.background = season.gradient;
-      pill.textContent = season[currentLang];
-      currentSeason = key;
-      setFavicon(key);
-    }
-
-    function detectSeason() {
-      const month = new Date().getMonth() + 1;
-      return (
-        Object.entries(seasons).find(([, value]) => value.months.includes(month))?.[0] ||
-        'spring'
-      );
-    }
-
-    function applyLanguage(lang) {
-      const t = translations[lang];
-      if (!t) return;
-      currentLang = lang;
-      document.getElementById('name').textContent = t.name;
-      document.getElementById('role').textContent = t.role;
-      document.getElementById('summary').textContent = t.summary;
-      document.getElementById('growth').textContent = t.growth;
-      document.getElementById('tag1').textContent = t.tag1;
-      document.getElementById('tag2').textContent = t.tag2;
-      document.getElementById('tag3').textContent = t.tag3;
-      document.getElementById('tag4').textContent = t.tag4;
-      document.getElementById('tag5').textContent = t.tag5;
-      document.getElementById('reach').textContent = t.reach;
-      document.getElementById('linkedin').textContent = t.linkedin;
-      document.getElementById('github').textContent = t.github;
-      document.getElementById('connect').textContent = t.connect;
-      document.getElementById('code').textContent = t.code;
-      document.getElementById('projects').textContent = t.projects;
-      document.getElementById('uttayo-desc').textContent = t.uttayo;
-      document.getElementById('gomi-desc').textContent = t.gomi;
-      document.getElementById('currently').textContent = t.currently;
-      document.getElementById('current-text').textContent = t.currentText;
-      applySeason(currentSeason);
-    }
-
-    langToggle.addEventListener('click', () => {
-      const next = currentLang === 'en' ? 'ja' : 'en';
-      applyLanguage(next);
-    });
-
-    // initialize
-    let currentSeason = detectSeason();
-    applyLanguage('en');
-    applySeason(currentSeason);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -21,13 +21,14 @@
     body {
       margin: 0;
       min-height: 100vh;
+      padding: 20px;
       font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: var(--text);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      overflow: hidden;
+      overflow: auto;
       transition: background 600ms ease;
     }
     .lang-toggle {
@@ -96,6 +97,7 @@
       box-shadow: 0 10px 22px rgba(14, 165, 233, 0.15);
     }
     @media (max-width: 540px) {
+      body { padding: 16px; align-items: flex-start; }
       main { padding: 24px; }
       .qr-wrap img { width: 220px; height: 220px; }
       h1 { font-size: 22px; }

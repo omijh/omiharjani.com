@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR — Omi Harjani</title>
+  <link id="favicon" rel="icon" type="image/svg+xml" href="../assets/favicon-spring.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
@@ -141,6 +142,11 @@
     const langToggle = document.getElementById('lang-toggle');
     let currentLang = 'en';
 
+    function setFavicon(key) {
+      const favicon = document.getElementById('favicon');
+      if (!favicon) return;
+      favicon.href = `../assets/favicon-${key}.svg`;
+    }
     function detectSeason() {
       const month = new Date().getMonth() + 1;
       return Object.entries(seasons).find(([, s]) => s.months.includes(month))?.[0] || 'spring';
@@ -149,6 +155,7 @@
       const season = seasons[key];
       if (!season) return;
       document.body.style.background = season.gradient;
+      setFavicon(key);
     }
     function applyLanguage(lang) {
       currentLang = lang;

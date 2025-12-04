@@ -43,7 +43,15 @@
       </div>
       <div class="hero__card">
         <div class="profile">
-          <img src="assets/pic.jpeg" alt="Portrait of Omi Harjani" class="avatar">
+          <img
+            src="assets/pic.jpeg"
+            alt="Portrait of Omi Harjani"
+            class="avatar"
+            loading="lazy"
+            width="96"
+            height="96"
+            onerror="this.onerror=null; this.src='assets/avatar-placeholder.svg';"
+          >
           <div>
             <div class="label" id="currently">Currently</div>
             <div class="profile-line strong" id="profile-line1">Cloud Engineer at MetLife Japan</div>

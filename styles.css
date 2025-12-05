@@ -369,9 +369,6 @@ a {
   .hero {
     grid-template-columns: 1fr;
   }
-  .hero__card {
-    order: -1;
-  }
   .lang-toggle {
     top: 12px;
     right: 12px;

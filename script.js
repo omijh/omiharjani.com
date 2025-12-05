@@ -46,7 +46,7 @@ function applySeason(seasonKey) {
 const translations = {
   en: {
     eyebrow: 'Building things at the intersection of cloud, AI, and startups.',
-    subtitle: 'Cloud Engineer • AI Builder • Founder of Uttayo',
+    subtitle: 'Cloud Engineer • AI Builder',
     location: 'Tokyo, Japan',
     currently: 'Currently',
     profile1: 'Cloud Engineer at MetLife Japan',
@@ -72,7 +72,7 @@ const translations = {
   },
   ja: {
     eyebrow: 'クラウド・AI・スタートアップの交差点でプロダクトを作っています。',
-    subtitle: 'クラウドエンジニア・AIビルダー・Uttayo創業者',
+    subtitle: 'クラウドエンジニア・AIビルダー',
     location: '東京、日本',
     currently: '現在',
     profile1: 'MetLife Japan のクラウドエンジニア',

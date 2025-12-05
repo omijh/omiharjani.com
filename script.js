@@ -45,19 +45,19 @@ function applySeason(seasonKey) {
 
 const translations = {
   en: {
-    eyebrow: 'Building things at the intersection of cloud, AI, and startups.',
-    subtitle: 'Cloud Engineer • AI Builder',
+    eyebrow: 'Cloud engineering, AI products, and hands-on experimentation.',
+    subtitle: 'Cloud Engineer • AI Builder in Tokyo',
     location: 'Tokyo, Japan',
     currently: 'Currently',
     profile1: 'Cloud Engineer at MetLife Japan',
-    profile2: 'Working on Azure, containers, and automation for large-scale systems.',
-    profile3: 'Always learning, testing new ideas.',
+    profile2: 'Building reliable Azure and Kubernetes platforms with automation.',
+    profile3: 'Experimenting with AI products, including the Uttayo marketplace.',
     aboutTitle: 'About',
     aboutLines: [
-      'Builder mindset.',
-      'Cloud engineer by day, AI product maker by night.',
-      'Focused on AI-powered tools and Uttayo; happy to collaborate on cloud, AI, or fast-moving experiments.',
-      'Outside of work, I enjoy building side projects, learning Japanese, and exploring Tokyo neighborhoods.',
+      'Builder mindset with a focus on useful, reliable systems.',
+      'Cloud engineer by day, AI product maker by night — always sharing what I learn.',
+      'Currently investing in AI-powered tools and Uttayo, a bilingual resale marketplace in Japan.',
+      'Outside of work, I explore Tokyo neighborhoods and keep refining my Japanese.',
     ],
     whatTitle: 'What I Do',
     pills: ['Azure', 'AKS & Containers', 'Terraform & IaC', 'Next.js & React', 'Supabase', 'AI / LLM Apps', 'AWS'],
@@ -67,23 +67,23 @@ const translations = {
     gomiDesc: 'A simple site that helps residents check trash day schedules in Japan, with a friendly mascot and clean UI.',
     gomiBtn: 'View project',
     footerKicker: 'Let’s connect.',
-    footerText: 'Always happy to talk cloud, AI, and startups.',
-    langToggle: 'EN / 日本語',
+    footerText: 'Always happy to talk cloud, AI, startups, and new experiments.',
+    langAriaLabel: 'Toggle language between English and Japanese',
   },
   ja: {
-    eyebrow: 'クラウド・AI・スタートアップの交差点でプロダクトを作っています。',
-    subtitle: 'クラウドエンジニア・AIビルダー',
+    eyebrow: 'クラウドエンジニアリングとAIプロダクトづくりに熱中しています。',
+    subtitle: '東京拠点のクラウドエンジニア・AIビルダー',
     location: '東京、日本',
     currently: '現在',
     profile1: 'MetLife Japan のクラウドエンジニア',
-    profile2: 'Azure・コンテナ・自動化を担当',
-    profile3: '常に学び、新しいことを試しています',
+    profile2: 'AzureとKubernetesのプラットフォームを自動化し、信頼性を高めています。',
+    profile3: 'バイリンガル中古マーケット「Uttayo」などAIプロダクトを実験中。',
     aboutTitle: '自己紹介',
     aboutLines: [
-      'ビルダー気質。',
-      '昼はクラウドエンジニア、夜はAIプロダクトづくり。',
-      '今はAIを活用したツールと、日本向けセカンドハンドマーケット「Uttayo」に注力。クラウド、AI、スピード感ある実験でご一緒できます。',
-      '仕事以外ではサイドプロジェクト、日本語学習、東京の街歩きを楽しんでいます。',
+      'つくることが好きで、役立つシステムづくりにこだわります。',
+      '昼はクラウドエンジニア、夜はAIプロダクトづくり。学んだことはすぐ共有。',
+      'AIを活用したツールとバイリンガル中古マーケット「Uttayo」に取り組んでいます。',
+      '仕事以外では東京の街歩きと日本語のブラッシュアップを楽しんでいます。',
     ],
     whatTitle: '得意分野',
     pills: ['Azure', 'AKS とコンテナ', 'Terraform と IaC', 'Next.js と React', 'Supabase', 'AI / LLM アプリ', 'AWS'],
@@ -94,7 +94,7 @@ const translations = {
     gomiBtn: 'プロジェクトを見る',
     footerKicker: 'つながりましょう。',
     footerText: 'クラウド、AI、スタートアップの話はいつでも歓迎です。',
-    langToggle: '日本語 / EN',
+    langAriaLabel: '英語と日本語の表示を切り替え',
   },
 };
 
@@ -102,12 +102,12 @@ function applyLanguage(lang) {
   const t = translations[lang];
   if (!t) return;
   document.getElementById('eyebrow').textContent = t.eyebrow;
-    document.getElementById('subtitle').textContent = t.subtitle;
-    document.getElementById('location').textContent = t.location;
-    document.getElementById('currently').textContent = t.currently;
-    document.getElementById('profile-line1').textContent = t.profile1;
-    document.getElementById('profile-line2').textContent = t.profile2;
-    document.getElementById('profile-line3').textContent = t.profile3;
+  document.getElementById('subtitle').textContent = t.subtitle;
+  document.getElementById('location').textContent = t.location;
+  document.getElementById('currently').textContent = t.currently;
+  document.getElementById('profile-line1').textContent = t.profile1;
+  document.getElementById('profile-line2').textContent = t.profile2;
+  document.getElementById('profile-line3').textContent = t.profile3;
   document.getElementById('about').textContent = t.aboutTitle;
   const aboutLineEls = [
     document.getElementById('about-line1'),
@@ -126,7 +126,6 @@ function applyLanguage(lang) {
   document.getElementById('gomi-btn').textContent = t.gomiBtn;
   document.getElementById('footer-kicker').textContent = t.footerKicker;
   document.getElementById('footer-text').textContent = t.footerText;
-  document.getElementById('lang-toggle').textContent = t.langToggle;
 
   const pillIds = ['pill1', 'pill2', 'pill3', 'pill4', 'pill5', 'pill6', 'pill7'];
   pillIds.forEach((id, idx) => {
@@ -145,6 +144,11 @@ function applyLanguage(lang) {
       jaSpan.classList.add('active');
       enSpan.classList.remove('active');
     }
+  }
+
+  const langToggle = document.getElementById('lang-toggle');
+  if (langToggle && t.langAriaLabel) {
+    langToggle.setAttribute('aria-label', t.langAriaLabel);
   }
 }
 

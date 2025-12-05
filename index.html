@@ -3,7 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Omi Harjani is a cloud engineer and AI builder in Tokyo specializing in Azure, Kubernetes, and AI-powered products like Uttayo.">
+  <meta name="keywords" content="Omi Harjani, cloud engineer, AI builder, Tokyo, Azure, Kubernetes, MetLife Japan, Uttayo">
+  <meta name="author" content="Omi Harjani">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://omiharjani.com/">
   <title>Omi Harjani — Cloud Engineer & AI Builder</title>
+  <meta property="og:title" content="Omi Harjani — Cloud Engineer & AI Builder in Tokyo">
+  <meta property="og:description" content="Portfolio of Omi Harjani, a Tokyo-based cloud engineer and AI builder focused on Azure, Kubernetes, and practical AI products.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://omiharjani.com/">
+  <meta property="og:image" content="https://omiharjani.com/assets/pic.jpeg">
+  <meta property="og:site_name" content="Omi Harjani">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Omi Harjani — Cloud Engineer & AI Builder in Tokyo">
+  <meta name="twitter:description" content="Cloud platforms, AI products, and projects by Omi Harjani in Tokyo.">
+  <meta name="twitter:image" content="https://omiharjani.com/assets/pic.jpeg">
+  <meta name="twitter:creator" content="@omiharjani">
+  <meta name="theme-color" content="#0ea5e9">
   <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="assets/favicon-spring.svg">
   <link rel="apple-touch-icon" href="assets/favicon-spring.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,16 +31,17 @@
 <body>
   <!-- Updated: clearer language toggle with active states -->
   <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
+    <span class="sr-only">Toggle language between English and Japanese</span>
     <span class="lang en active">EN</span>
-    <span class="divider">/</span>
+    <span class="divider" aria-hidden="true">/</span>
     <span class="lang ja">日本語</span>
   </button>
   <header class="site-header">
     <div class="hero container fade-in">
       <div class="hero__text">
-        <p class="eyebrow" id="eyebrow">Building things at the intersection of cloud, AI, and startups.</p>
+        <p class="eyebrow" id="eyebrow">Cloud engineering, AI products, and hands-on experimentation.</p>
         <h1 id="name">Omi Harjani</h1>
-        <div class="subtitle" id="subtitle">Cloud Engineer • AI Builder</div>
+        <div class="subtitle" id="subtitle">Cloud Engineer • AI Builder in Tokyo</div>
         <div class="location" id="location">Tokyo, Japan</div>
         <div class="socials" aria-label="Social links">
           <a class="icon-link" href="https://www.linkedin.com/in/supernerd" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -55,8 +73,8 @@
           <div>
             <div class="label" id="currently">Currently</div>
             <div class="profile-line strong" id="profile-line1">Cloud Engineer at MetLife Japan</div>
-            <div class="profile-line" id="profile-line2">Working on Azure, containers, and automation for large-scale systems.</div>
-            <div class="profile-line" id="profile-line3">Always learning, testing new ideas.</div>
+            <div class="profile-line" id="profile-line2">Building reliable Azure and Kubernetes platforms with automation.</div>
+            <div class="profile-line" id="profile-line3">Experimenting with AI products, including the Uttayo marketplace.</div>
           </div>
         </div>
       </div>
@@ -71,10 +89,10 @@
       </div>
       <!-- Updated: About sentences split per line -->
       <div class="body-text about-lines">
-        <span id="about-line1">Builder mindset.</span>
-        <span id="about-line2">Cloud engineer by day, AI product maker by night.</span>
-        <span id="about-line3">Focused on AI-powered tools and Uttayo; happy to collaborate on cloud, AI, or fast-moving experiments.</span>
-        <span id="about-line4">Outside of work, I enjoy building side projects, learning Japanese, and exploring Tokyo neighborhoods.</span>
+        <span id="about-line1">Builder mindset with a focus on useful, reliable systems.</span>
+        <span id="about-line2">Cloud engineer by day, AI product maker by night — always sharing what I learn.</span>
+        <span id="about-line3">Currently investing in AI-powered tools and Uttayo, a bilingual resale marketplace in Japan.</span>
+        <span id="about-line4">Outside of work, I explore Tokyo neighborhoods and keep refining my Japanese.</span>
       </div>
     </section>
     <div class="container section-divider"></div>
@@ -131,6 +149,40 @@
       <small>© <span id="year"></span> Omi Harjani</small>
     </div>
   </footer>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Omi Harjani",
+      "jobTitle": "Cloud Engineer & AI Builder",
+      "url": "https://omiharjani.com/",
+      "image": "https://omiharjani.com/assets/pic.jpeg",
+      "description": "Omi Harjani is a Tokyo-based cloud engineer and AI product builder focusing on Azure, Kubernetes, and applied AI.",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "MetLife Japan"
+      },
+      "knowsAbout": [
+        "Cloud architecture",
+        "Azure",
+        "Kubernetes",
+        "Terraform",
+        "AI applications"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/supernerd",
+        "https://github.com/omijh",
+        "https://x.com/omiharjani",
+        "https://uttayo.com"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tokyo",
+        "addressCountry": "Japan"
+      }
+    }
+  </script>
 
   <script src="script.js"></script>
 </body>

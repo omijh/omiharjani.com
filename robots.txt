@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://omiharjani.com/sitemap.xml

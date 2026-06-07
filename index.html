@@ -29,11 +29,20 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     var m = new Date().getMonth() + 1;
+    var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
     var g;
-    if (m >= 3 && m <= 5) g = 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)';
-    else if (m >= 6 && m <= 8) g = 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)';
-    else if (m >= 9 && m <= 11) g = 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)';
-    else g = 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)';
+    if (m >= 3 && m <= 5) g = d
+      ? 'linear-gradient(135deg, #2d1528 0%, #0f1b2e 50%, #0f2e1a 100%)'
+      : 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)';
+    else if (m >= 6 && m <= 8) g = d
+      ? 'linear-gradient(135deg, #0f1528 0%, #2d1f0f 50%, #0f2e1a 100%)'
+      : 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)';
+    else if (m >= 9 && m <= 11) g = d
+      ? 'linear-gradient(135deg, #2d0f0f 0%, #2d1528 50%, #1a2e0f 100%)'
+      : 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)';
+    else g = d
+      ? 'linear-gradient(135deg, #0a102e 0%, #1a1528 50%, #0f1a3e 100%)'
+      : 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)';
     document.documentElement.style.background = g;
   </script>
 </head>

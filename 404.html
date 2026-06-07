@@ -31,15 +31,42 @@
     .error-message {
       font-size: 20px;
       color: var(--muted);
-      margin: 16px 0 32px;
+      margin: 16px 0 8px;
       max-width: 400px;
+    }
+    .error-sub {
+      font-size: 14px;
+      color: var(--muted);
+      opacity: 0.6;
+      margin: 0 0 8px;
+      max-width: 360px;
+    }
+    .error-dino {
+      font-size: 64px;
+      line-height: 1;
+      margin: 8px 0 16px;
+      filter: grayscale(0.3);
+      transition: filter 0.3s, transform 0.3s;
+      cursor: default;
+      user-select: none;
+      animation: wobble 3s ease-in-out infinite;
+    }
+    .error-dino:hover {
+      filter: grayscale(0);
+      transform: scale(1.1);
+    }
+    @keyframes wobble {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
   </style>
 </head>
 <body>
-  <main class="error-page fade-in">
+  <main class="error-page">
     <h1 class="error-code">404</h1>
+    <div class="error-dino" aria-hidden="true">🦕</div>
     <p class="error-message">That page doesn't exist — or it wandered off somewhere.</p>
+    <p class="error-sub">Don't worry, this little dinosaur is equally confused.</p>
     <a class="ghost" href="/">Go home</a>
   </main>
   <script src="/js/theme.js"></script>

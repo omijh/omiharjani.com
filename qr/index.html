@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR — Omi Harjani</title>
-  <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="../assets/favicon-spring.svg">
-  <link rel="apple-touch-icon" href="../assets/favicon-spring.svg">
+  <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon-spring.svg">
+  <link rel="apple-touch-icon" href="/assets/favicon-spring.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      color-scheme: light;
+      color-scheme: light dark;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-right: env(safe-area-inset-right, 0px);
       --safe-left: env(safe-area-inset-left, 0px);
@@ -45,14 +45,22 @@
       border-radius: 12px;
       border: 1px solid var(--card-border);
       background: rgba(10, 12, 20, 0.08);
-      color: var(--text);
+      color: #000000;
       font-weight: 800;
+      transition: transform 120ms ease, box-shadow 120ms ease;
       letter-spacing: 0.2px;
       box-shadow: 0 10px 24px rgba(8, 15, 33, 0.18);
       cursor: pointer;
       z-index: 2;
     }
-    .lang-toggle:focus { outline: none; }
+    .lang-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(8, 15, 33, 0.22);
+    }
+    .lang-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
     main {
       width: min(560px, calc(100% - 40px));
       padding: 32px;
@@ -115,6 +123,26 @@
         font-size: 13px;
       }
     }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --card-bg: rgba(30, 41, 59, 0.9);
+        --card-border: rgba(51, 65, 85, 0.75);
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      }
+      .lang-toggle {
+        background: rgba(15, 23, 42, 0.95);
+        color: #ffffff;
+      }
+      .cta {
+        background: rgba(14, 165, 233, 0.2);
+        color: #7dd3fc;
+      }
+      .qr-wrap {
+        background: rgba(15, 23, 42, 0.5);
+      }
+    }
   </style>
 </head>
 <body>
@@ -124,19 +152,14 @@
     <h1 id="heading">Scan to visit omiharjani.com</h1>
     <p id="sub">Point your camera at the code or tap below to open the site.</p>
     <div class="qr-wrap">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://omiharjani.com" alt="QR code pointing to omiharjani.com">
+      <img src="../assets/qr-code.png" alt="QR code for omiharjani.com">
     </div>
     <div>
       <a class="cta" href="https://omiharjani.com">Open omiharjani.com</a>
     </div>
   </main>
+  <script src="../js/theme.js"></script>
   <script>
-    const seasons = {
-      spring: { months: [3,4,5], gradient: 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)' },
-      summer: { months: [6,7,8], gradient: 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)' },
-      autumn: { months: [9,10,11], gradient: 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)' },
-      winter: { months: [12,1,2], gradient: 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)' }
-    };
     const translations = {
       en: { heading: 'Scan to visit omiharjani.com', sub: 'Point your camera at the code or tap below to open the site.' },
       ja: { heading: 'スキャンして omiharjani.com へ', sub: 'カメラを QR に向けるか、下のボタンをタップしてください。' }
@@ -144,32 +167,18 @@
     const langToggle = document.getElementById('lang-toggle');
     let currentLang = 'en';
 
-    function setFavicon(key) {
-      const favicon = document.getElementById('favicon');
-      if (!favicon) return;
-      favicon.href = `../assets/favicon-${key}.svg`;
-    }
-    function detectSeason() {
-      const month = new Date().getMonth() + 1;
-      return Object.entries(seasons).find(([, s]) => s.months.includes(month))?.[0] || 'spring';
-    }
-    function applySeason(key) {
-      const season = seasons[key];
-      if (!season) return;
-      document.body.style.background = season.gradient;
-      setFavicon(key);
-    }
     function applyLanguage(lang) {
       currentLang = lang;
       document.getElementById('heading').textContent = translations[lang].heading;
       document.getElementById('sub').textContent = translations[lang].sub;
+      document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
     }
     langToggle.addEventListener('click', () => {
       const next = currentLang === 'en' ? 'ja' : 'en';
       applyLanguage(next);
     });
     applyLanguage('en');
-    applySeason(detectSeason());
+    applySeason(getCurrentSeason());
   </script>
 </body>
 </html>

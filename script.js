@@ -1,48 +1,3 @@
-// Seasonal backgrounds and favicons
-const seasons = {
-  spring: {
-    months: [3, 4, 5],
-    gradient: 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)',
-    icon: 'assets/favicon-spring.svg',
-  },
-  summer: {
-    months: [6, 7, 8],
-    gradient: 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)',
-    icon: 'assets/favicon-summer.svg',
-  },
-  autumn: {
-    months: [9, 10, 11],
-    gradient: 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)',
-    icon: 'assets/favicon-autumn.svg',
-  },
-  winter: {
-    months: [12, 1, 2],
-    gradient: 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)',
-    icon: 'assets/favicon-winter.svg',
-  },
-};
-
-function detectSeason() {
-  const month = new Date().getMonth() + 1;
-  return (
-    Object.entries(seasons).find(([, v]) => v.months.includes(month))?.[0] || 'spring'
-  );
-}
-
-function applySeason(seasonKey) {
-  const season = seasons[seasonKey];
-  if (!season) return;
-  document.body.style.background = season.gradient;
-  const favicon = document.getElementById('favicon');
-  if (favicon) {
-    favicon.href = season.icon;
-  }
-  const apple = document.querySelector('link[rel="apple-touch-icon"]');
-  if (apple) {
-    apple.href = season.icon;
-  }
-}
-
 const translations = {
   en: {
     eyebrow: 'Cloud engineering, AI products, and hands-on experimentation.',
@@ -51,13 +6,13 @@ const translations = {
     currently: 'Currently',
     profile1: 'Cloud Engineer at MetLife Japan',
     profile2: 'Building reliable Azure and Kubernetes platforms with automation.',
-    profile3: 'Experimenting with AI products, including the Uttayo marketplace.',
+    profile3: 'Always learning, testing new ideas — and building the occasional AI product.',
     aboutTitle: 'About',
     aboutLines: [
-      'Builder mindset with a focus on useful, reliable systems.',
-      'Cloud engineer by day, AI product maker by night — always sharing what I learn.',
-      'Currently investing in AI-powered tools and Uttayo, a bilingual resale marketplace in Japan.',
-      'Outside of work, I explore Tokyo neighborhoods and keep refining my Japanese.',
+      'Builder mindset — I love making things that are genuinely useful.',
+      'Cloud engineer by day, AI product maker by night. I share what I learn.',
+      'Right now: AI‑powered tools + bilingual second‑hand marketplace for Japan (Uttayo).',
+      'Outside work: exploring Tokyo neighborhoods and brushing up my Japanese.',
     ],
     whatTitle: 'What I Do',
     pills: ['Azure', 'AKS & Containers', 'Terraform & IaC', 'Next.js & React', 'Supabase', 'AI / LLM Apps', 'AWS'],
@@ -66,6 +21,10 @@ const translations = {
     uttayoBtn: 'View project',
     gomiDesc: 'A simple site that helps residents check trash day schedules in Japan, with a friendly mascot and clean UI.',
     gomiBtn: 'View project',
+    status: 'Building Uttayo & GomiHelper · Studying 日本語',
+    podcastDesc: 'A podcast chatting about startups, tech, and life in Japan.',
+    podcastBtn: 'Listen →',
+    moreLink: 'More on GitHub →',
     footerKicker: 'Let’s connect.',
     footerText: 'Always happy to talk cloud, AI, startups, and new experiments.',
     langAriaLabel: 'Toggle language between English and Japanese',
@@ -92,63 +51,73 @@ const translations = {
     uttayoBtn: 'サイトを見る',
     gomiDesc: '日本のごみ収集日を確認できるシンプルなサイト。親しみやすいマスコットとクリーンなUI。',
     gomiBtn: 'プロジェクトを見る',
+    status: 'UttayoとGomiHelperを開発中 · 日本語勉強中',
+    podcastDesc: 'スタートアップ、テクノロジー、日本の生活について語るポッドキャスト。',
+    podcastBtn: '聴く →',
+    moreLink: 'GitHubで見る →',
     footerKicker: 'つながりましょう。',
     footerText: 'クラウド、AI、スタートアップの話はいつでも歓迎です。',
     langAriaLabel: '英語と日本語の表示を切り替え',
   },
 };
 
+const fieldMappings = [
+  ['eyebrow', 'eyebrow'],
+  ['subtitle', 'subtitle'],
+  ['location', 'location'],
+  ['currently', 'currently'],
+  ['profile-line1', 'profile1'],
+  ['profile-line2', 'profile2'],
+  ['profile-line3', 'profile3'],
+  ['about', 'aboutTitle'],
+  ['what-i-do', 'whatTitle'],
+  ['projects', 'projectsTitle'],
+  ['uttayo-desc', 'uttayoDesc'],
+  ['uttayo-btn', 'uttayoBtn'],
+  ['gomi-desc', 'gomiDesc'],
+  ['gomi-btn', 'gomiBtn'],
+  ['status', 'status'],
+  ['podcast-desc', 'podcastDesc'],
+  ['podcast-btn', 'podcastBtn'],
+  ['more-link', 'moreLink'],
+  ['footer-kicker', 'footerKicker'],
+  ['footer-text', 'footerText'],
+];
+
+const aboutLineIds = ['about-line1', 'about-line2', 'about-line3', 'about-line4'];
+const pillNames = ['pill1', 'pill2', 'pill3', 'pill4', 'pill5', 'pill6', 'pill7'];
+
 function applyLanguage(lang) {
   const t = translations[lang];
   if (!t) return;
-  document.getElementById('eyebrow').textContent = t.eyebrow;
-  document.getElementById('subtitle').textContent = t.subtitle;
-  document.getElementById('location').textContent = t.location;
-  document.getElementById('currently').textContent = t.currently;
-  document.getElementById('profile-line1').textContent = t.profile1;
-  document.getElementById('profile-line2').textContent = t.profile2;
-  document.getElementById('profile-line3').textContent = t.profile3;
-  document.getElementById('about').textContent = t.aboutTitle;
-  const aboutLineEls = [
-    document.getElementById('about-line1'),
-    document.getElementById('about-line2'),
-    document.getElementById('about-line3'),
-    document.getElementById('about-line4'),
-  ];
-  aboutLineEls.forEach((el, idx) => {
+
+  fieldMappings.forEach(([elId, key]) => {
+    const el = document.getElementById(elId);
+    if (el && t[key]) el.textContent = t[key];
+  });
+
+  aboutLineIds.forEach((id, idx) => {
+    const el = document.getElementById(id);
     if (el && t.aboutLines[idx]) el.textContent = t.aboutLines[idx];
   });
-  document.getElementById('what-i-do').textContent = t.whatTitle;
-  document.getElementById('projects').textContent = t.projectsTitle;
-  document.getElementById('uttayo-desc').textContent = t.uttayoDesc;
-  document.getElementById('uttayo-btn').textContent = t.uttayoBtn;
-  document.getElementById('gomi-desc').textContent = t.gomiDesc;
-  document.getElementById('gomi-btn').textContent = t.gomiBtn;
-  document.getElementById('footer-kicker').textContent = t.footerKicker;
-  document.getElementById('footer-text').textContent = t.footerText;
 
-  const pillIds = ['pill1', 'pill2', 'pill3', 'pill4', 'pill5', 'pill6', 'pill7'];
-  pillIds.forEach((id, idx) => {
-    const el = document.getElementById(id);
+  pillNames.forEach((name, idx) => {
+    const el = document.querySelector(`[data-pill="${name}"]`);
     if (el && t.pills[idx]) el.textContent = t.pills[idx];
   });
 
-  // Toggle active state visuals
-  const enSpan = document.querySelector('#lang-toggle .en');
-  const jaSpan = document.querySelector('#lang-toggle .ja');
-  if (enSpan && jaSpan) {
-    if (lang === 'en') {
-      enSpan.classList.add('active');
-      jaSpan.classList.remove('active');
-    } else {
-      jaSpan.classList.add('active');
-      enSpan.classList.remove('active');
-    }
-  }
+  document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
 
   const langToggle = document.getElementById('lang-toggle');
   if (langToggle && t.langAriaLabel) {
     langToggle.setAttribute('aria-label', t.langAriaLabel);
+  }
+
+  const enSpan = document.querySelector('#lang-toggle .en');
+  const jaSpan = document.querySelector('#lang-toggle .ja');
+  if (enSpan && jaSpan) {
+    enSpan.classList.toggle('active', lang === 'en');
+    jaSpan.classList.toggle('active', lang === 'ja');
   }
 }
 
@@ -175,18 +144,18 @@ function setYear() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const seasonKey = detectSeason();
-  applySeason(seasonKey);
+  applySeason(getCurrentSeason());
   setYear();
   setupFadeIns();
 
-  let currentLang = 'en';
+  let currentLang = localStorage.getItem('lang') || 'en';
   applyLanguage(currentLang);
 
   const langToggle = document.getElementById('lang-toggle');
   if (langToggle) {
     langToggle.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'ja' : 'en';
+      localStorage.setItem('lang', currentLang);
       applyLanguage(currentLang);
     });
   }

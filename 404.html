@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page not found — Omi Harjani">
+  <title>404 — Omi Harjani</title>
+  <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon-spring.svg">
+  <link rel="apple-touch-icon" href="/assets/favicon-spring.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .error-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 32px;
+    }
+    .error-code {
+      font-size: clamp(72px, 20vw, 120px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin: 0;
+      line-height: 1;
+    }
+    .error-message {
+      font-size: 20px;
+      color: var(--muted);
+      margin: 16px 0 32px;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <main class="error-page fade-in">
+    <h1 class="error-code">404</h1>
+    <p class="error-message">That page doesn't exist — or it wandered off somewhere.</p>
+    <a class="ghost" href="/">Go home</a>
+  </main>
+  <script src="/js/theme.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      applySeason(getCurrentSeason());
+    });
+  </script>
+</body>
+</html>

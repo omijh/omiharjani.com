@@ -180,4 +180,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (themeToggle) {
     themeToggle.addEventListener('click', cycleTheme);
   }
+
+  const emailLink = document.querySelector('a[href^="mailto:"]');
+  if (emailLink) {
+    emailLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = emailLink.getAttribute('href').replace('mailto:', '');
+      try {
+        await navigator.clipboard.writeText(email);
+        const toast = document.createElement('div');
+        toast.textContent = 'Copied!';
+        toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:6px 14px;border-radius:8px;font-weight:700;z-index:999;opacity:0;transition:opacity .2s';
+        document.body.appendChild(toast);
+        requestAnimationFrame(() => toast.style.opacity = '1');
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 200);
+        }, 1200);
+      } catch {
+        window.location.href = emailLink.getAttribute('href');
+      }
+    });
+  }
 });

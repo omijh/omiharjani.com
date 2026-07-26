@@ -24,6 +24,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Minify CSS and JS
+        run: |
+          npx --yes csso-cli -i styles.css -o styles.css
+          npx --yes terser script.js -o script.js --compress --mangle
+          npx --yes terser js/theme.js -o js/theme.js --compress --mangle
+          npx --yes terser js/analytics.js -o js/analytics.js --compress --mangle
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:

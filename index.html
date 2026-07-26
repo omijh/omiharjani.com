@@ -34,29 +34,32 @@
   <link rel="stylesheet" href="styles.css">
   <script defer src="/js/analytics.js"></script>
    <script>
-     (function () {
-       var m = new Date().getMonth() + 1;
-       var p = localStorage.getItem('theme');
-       var t = p || 'system';
-       var d = p === 'dark' || (!p && window.matchMedia('(prefers-color-scheme: dark)').matches);
-       if (d) document.documentElement.classList.add('dark-mode');
-       document.documentElement.classList.add('theme-' + t);
-       document.documentElement.style.colorScheme = d ? 'dark' : 'light';
-       var g;
-       if (m >= 3 && m <= 5) g = d
-         ? 'linear-gradient(135deg, #2d1528 0%, #0f1b2e 50%, #0f2e1a 100%)'
-         : 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)';
-       else if (m >= 6 && m <= 8) g = d
-         ? 'linear-gradient(135deg, #0f1528 0%, #2d1f0f 50%, #0f2e1a 100%)'
-         : 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)';
-       else if (m >= 9 && m <= 11) g = d
-         ? 'linear-gradient(135deg, #2d0f0f 0%, #2d1528 50%, #1a2e0f 100%)'
-         : 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)';
-       else g = d
-         ? 'linear-gradient(135deg, #0a102e 0%, #1a1528 50%, #0f1a3e 100%)'
-         : 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)';
-       document.documentElement.style.setProperty('--page-gradient', g);
-     })();
+      (function () {
+        var m = new Date().getMonth() + 1;
+        var p = localStorage.getItem('theme');
+        var t = p || 'system';
+        var d = p === 'dark' || (!p && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (d) document.documentElement.classList.add('dark-mode');
+        document.documentElement.classList.add('theme-' + t);
+        document.documentElement.style.colorScheme = d ? 'dark' : 'light';
+        var g, a;
+        if (m >= 3 && m <= 5) {
+          g = d ? 'linear-gradient(135deg, #1a0a14 0%, #0f172a 50%, #0a2818 100%)' : 'linear-gradient(135deg, #fde8ef 0%, #f0e6ff 50%, #e6f5e8 100%)';
+          a = d ? '#fb7185' : '#e11d48';
+        } else if (m >= 6 && m <= 8) {
+          g = d ? 'linear-gradient(135deg, #1a1410 0%, #0a2830 50%, #0f172a 100%)' : 'linear-gradient(135deg, #fef6e8 0%, #e6f4ff 50%, #e6f5ea 100%)';
+          a = d ? '#fbbf24' : '#d97706';
+        } else if (m >= 9 && m <= 11) {
+          g = d ? 'linear-gradient(135deg, #1f0a0a 0%, #1a1410 50%, #2a1a0e 100%)' : 'linear-gradient(135deg, #fef0e6 0%, #fde8d8 50%, #fcf6e8 100%)';
+          a = d ? '#fb923c' : '#ea580c';
+        } else {
+          g = d ? 'linear-gradient(135deg, #080e2e 0%, #141438 50%, #0f1a2e 100%)' : 'linear-gradient(135deg, #f0f4ff 0%, #f0e6ff 50%, #e6f4fa 100%)';
+          a = d ? '#818cf8' : '#6366f1';
+        }
+        document.documentElement.style.setProperty('--page-gradient', g);
+        document.documentElement.style.setProperty('--accent', a);
+        document.querySelector('meta[name="theme-color"]').content = a;
+      })();
    </script>
 </head>
 <body>

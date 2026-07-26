@@ -1,29 +1,37 @@
 var seasons = {
   spring: {
     months: [3, 4, 5],
-    light: 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)',
-    dark: 'linear-gradient(135deg, #2d1528 0%, #0f1b2e 50%, #0f2e1a 100%)',
+    light: 'linear-gradient(135deg, #fde8ef 0%, #f0e6ff 50%, #e6f5e8 100%)',
+    dark: 'linear-gradient(135deg, #1a0a14 0%, #0f172a 50%, #0a2818 100%)',
+    accent: '#e11d48',
+    accentDark: '#fb7185',
     icon: '/assets/favicon-spring.svg',
     iconDark: '/assets/favicon-spring-dark.svg',
   },
   summer: {
     months: [6, 7, 8],
-    light: 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)',
-    dark: 'linear-gradient(135deg, #0f1528 0%, #2d1f0f 50%, #0f2e1a 100%)',
+    light: 'linear-gradient(135deg, #fef6e8 0%, #e6f4ff 50%, #e6f5ea 100%)',
+    dark: 'linear-gradient(135deg, #1a1410 0%, #0a2830 50%, #0f172a 100%)',
+    accent: '#d97706',
+    accentDark: '#fbbf24',
     icon: '/assets/favicon-summer.svg',
     iconDark: '/assets/favicon-summer-dark.svg',
   },
   autumn: {
     months: [9, 10, 11],
-    light: 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)',
-    dark: 'linear-gradient(135deg, #2d0f0f 0%, #2d1528 50%, #1a2e0f 100%)',
+    light: 'linear-gradient(135deg, #fef0e6 0%, #fde8d8 50%, #fcf6e8 100%)',
+    dark: 'linear-gradient(135deg, #1f0a0a 0%, #1a1410 50%, #2a1a0e 100%)',
+    accent: '#ea580c',
+    accentDark: '#fb923c',
     icon: '/assets/favicon-autumn.svg',
     iconDark: '/assets/favicon-autumn-dark.svg',
   },
   winter: {
     months: [12, 1, 2],
-    light: 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)',
-    dark: 'linear-gradient(135deg, #0a102e 0%, #1a1528 50%, #0f1a3e 100%)',
+    light: 'linear-gradient(135deg, #f0f4ff 0%, #f0e6ff 50%, #e6f4fa 100%)',
+    dark: 'linear-gradient(135deg, #080e2e 0%, #141438 50%, #0f1a2e 100%)',
+    accent: '#6366f1',
+    accentDark: '#818cf8',
     icon: '/assets/favicon-winter.svg',
     iconDark: '/assets/favicon-winter-dark.svg',
   },
@@ -60,8 +68,10 @@ function applySeason(seasonKey) {
   var apple = document.querySelector('link[rel="apple-touch-icon"]');
   if (apple) apple.href = icon;
 
+  document.documentElement.style.setProperty('--accent', dark ? season.accentDark : season.accent);
+
   var meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = dark ? '#0f172a' : '#0ea5e9';
+  if (meta) meta.content = dark ? season.accentDark : season.accent;
 
   var root = document.documentElement;
   var theme = getPreferredTheme();

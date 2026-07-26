@@ -151,8 +151,7 @@ function updateThemeLabel(mode) {
 }
 
 function cycleTheme() {
-  const current = getPreferredTheme();
-  const next = current === 'dark' ? 'light' : 'dark';
+  const next = isDarkMode() ? 'light' : 'dark';
   localStorage.setItem('theme', next);
   applySeason(getCurrentSeason());
   updateThemeLabel(next);

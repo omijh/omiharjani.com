@@ -151,14 +151,9 @@ function updateThemeLabel(mode) {
 }
 
 function cycleTheme() {
-  const themes = ['system', 'dark', 'light'];
   const current = getPreferredTheme();
-  const next = themes[(themes.indexOf(current) + 1) % themes.length];
-  if (next === 'system') {
-    localStorage.removeItem('theme');
-  } else {
-    localStorage.setItem('theme', next);
-  }
+  const next = current === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
   applySeason(getCurrentSeason());
   updateThemeLabel(next);
 }

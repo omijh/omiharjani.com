@@ -1,4 +1,4 @@
-const seasons = {
+var seasons = {
   spring: {
     months: [3, 4, 5],
     light: 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)',
@@ -30,27 +30,50 @@ const seasons = {
 };
 
 function getCurrentSeason() {
-  const month = new Date().getMonth() + 1;
-  return Object.entries(seasons).find(([, v]) => v.months.includes(month))?.[0] || 'spring';
+  var month = new Date().getMonth() + 1;
+  return Object.entries(seasons).find(function (_a) {
+    return _a[1].months.includes(month);
+  })?.[0] || 'spring';
+}
+
+function getPreferredTheme() {
+  return localStorage.getItem('theme') || 'system';
 }
 
 function isDarkMode() {
+  var t = getPreferredTheme();
+  if (t === 'dark') return true;
+  if (t === 'light') return false;
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
 function applySeason(seasonKey) {
-  const season = seasons[seasonKey];
+  var season = seasons[seasonKey];
   if (!season) return;
-  const dark = isDarkMode();
-  document.body.style.background = dark ? season.dark : season.light;
-  const icon = dark && season.iconDark ? season.iconDark : season.icon;
-  const favicon = document.getElementById('favicon');
+  var dark = isDarkMode();
+  var gradient = dark ? season.dark : season.light;
+  document.documentElement.style.setProperty('--page-gradient', gradient);
+
+  var icon = dark && season.iconDark ? season.iconDark : season.icon;
+  var favicon = document.getElementById('favicon');
   if (favicon) favicon.href = icon;
-  const apple = document.querySelector('link[rel="apple-touch-icon"]');
+  var apple = document.querySelector('link[rel="apple-touch-icon"]');
   if (apple) apple.href = icon;
+
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = dark ? '#0f172a' : '#0ea5e9';
+
+  var root = document.documentElement;
+  var theme = getPreferredTheme();
+  root.classList.remove('theme-system', 'theme-dark', 'theme-light');
+  root.classList.add('theme-' + theme);
+  root.classList.toggle('dark-mode', dark);
+  root.style.colorScheme = dark ? 'dark' : 'light';
 }
 
-const darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
-darkModeMedia.addEventListener('change', () => {
-  applySeason(getCurrentSeason());
+var darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+darkModeMedia.addEventListener('change', function () {
+  if (getPreferredTheme() === 'system') {
+    applySeason(getCurrentSeason());
+  }
 });

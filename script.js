@@ -121,7 +121,6 @@ function applyLanguage(lang) {
   }
 }
 
-// Fade-in observer
 function setupFadeIns() {
   const observer = new IntersectionObserver(
     (entries) => {
@@ -137,16 +136,39 @@ function setupFadeIns() {
   document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
 }
 
-// Footer year
 function setYear() {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+}
+
+function updateThemeLabel(mode) {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  const labels = { system: 'Auto', dark: 'Dark', light: 'Light' };
+  const label = labels[mode] || 'Auto';
+  btn.setAttribute('aria-label', `Theme: ${label}`);
+  btn.setAttribute('title', `Theme: ${label} — click to change`);
+}
+
+function cycleTheme() {
+  const themes = ['system', 'dark', 'light'];
+  const current = getPreferredTheme();
+  const next = themes[(themes.indexOf(current) + 1) % themes.length];
+  if (next === 'system') {
+    localStorage.removeItem('theme');
+  } else {
+    localStorage.setItem('theme', next);
+  }
+  applySeason(getCurrentSeason());
+  updateThemeLabel(next);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   applySeason(getCurrentSeason());
   setYear();
   setupFadeIns();
+
+  updateThemeLabel(getPreferredTheme());
 
   let currentLang = localStorage.getItem('lang') || 'en';
   applyLanguage(currentLang);
@@ -158,5 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('lang', currentLang);
       applyLanguage(currentLang);
     });
+  }
+
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', cycleTheme);
   }
 });

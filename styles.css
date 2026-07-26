@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --bg: #f7f9fc;
   --text: #0b1220;
   --muted: #1f2a3a;
@@ -17,45 +17,45 @@
   --border-hover: rgba(14, 165, 233, 0.35);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f172a;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --card: rgba(30, 41, 59, 0.95);
-    --border: rgba(51, 65, 85, 0.8);
-    --shadow: 0 22px 70px rgba(0, 0, 0, 0.5);
-    --pill-bg: rgba(14, 165, 233, 0.15);
-    --pill-border: rgba(14, 165, 233, 0.3);
-    --pill-text: #7dd3fc;
-    --ghost-border: rgba(14, 165, 233, 0.3);
-    --ghost-bg: rgba(14, 165, 233, 0.1);
-    --ghost-text: #7dd3fc;
-    --divider: rgba(148, 163, 184, 0.12);
-    --border-hover: rgba(14, 165, 233, 0.5);
-  }
-  .icon-link {
-    background: rgba(15, 23, 42, 0.95);
-    border-color: rgba(148, 163, 184, 0.2);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-  }
-  .icon-link svg {
-    fill: #ffffff;
-  }
-  .lang-toggle {
-    background: rgba(15, 23, 42, 0.95);
-    border-color: rgba(148, 163, 184, 0.2);
-    color: #ffffff;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
-  }
-  .secret-link {
-    color: var(--muted);
-    opacity: 0.7;
-  }
-  .secret-link:hover {
-    opacity: 1;
-  }
+.dark-mode {
+  --bg: #0f172a;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --card: rgba(30, 41, 59, 0.95);
+  --border: rgba(51, 65, 85, 0.8);
+  --shadow: 0 22px 70px rgba(0, 0, 0, 0.5);
+  --pill-bg: rgba(14, 165, 233, 0.15);
+  --pill-border: rgba(14, 165, 233, 0.3);
+  --pill-text: #7dd3fc;
+  --ghost-border: rgba(14, 165, 233, 0.3);
+  --ghost-bg: rgba(14, 165, 233, 0.1);
+  --ghost-text: #7dd3fc;
+  --divider: rgba(148, 163, 184, 0.12);
+  --border-hover: rgba(14, 165, 233, 0.5);
+  color-scheme: dark;
+}
+.dark-mode .icon-link {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(148, 163, 184, 0.2);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+.dark-mode .icon-link svg {
+  fill: #ffffff;
+}
+.dark-mode .lang-toggle,
+.dark-mode .theme-toggle {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(148, 163, 184, 0.2);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+}
+.dark-mode .secret-link {
+  color: var(--muted);
+  opacity: 0.7;
+}
+.dark-mode .secret-link:hover {
+  opacity: 1;
 }
 
 *,
@@ -64,13 +64,24 @@
   box-sizing: border-box;
 }
 
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+html {
+  background: var(--page-gradient, var(--bg));
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   min-height: 100vh;
   padding: 0;
+  transition: color 0.25s ease, background-color 0.25s ease;
 }
 
 .sr-only {
@@ -157,7 +168,7 @@ a {
   display: grid;
   place-items: center;
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  transition: transform 150ms ease, box-shadow 150ms ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .icon-link svg {
@@ -177,6 +188,7 @@ a {
   border-radius: 20px;
   box-shadow: var(--shadow);
   padding: 18px;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .profile {
@@ -193,6 +205,7 @@ a {
   border: 3px solid rgba(255, 255, 255, 0.92);
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
   background: rgba(255, 255, 255, 0.85);
+  transition: border-color 0.25s ease;
 }
 
 .label {
@@ -249,6 +262,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .pill-icon {
@@ -272,7 +286,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 0.25s ease;
 }
 
 .card > div {
@@ -326,7 +340,7 @@ a {
   justify-content: center;
   gap: 8px;
   min-width: 120px;
-  transition: transform 120ms ease, box-shadow 120ms ease;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .ghost[disabled],
@@ -396,6 +410,25 @@ a {
 .section-divider {
   border-top: 1px solid var(--divider);
   margin: 6px auto;
+  transition: border-color 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+  .fade-in,
+  .card,
+  .icon-link,
+  .ghost,
+  .lang-toggle,
+  .theme-toggle,
+  .pill,
+  body,
+  .section-divider {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .qr-card {
@@ -408,6 +441,7 @@ a {
   display: grid;
   gap: 12px;
   justify-items: center;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .qr-card img {
@@ -440,7 +474,7 @@ a {
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
   cursor: pointer;
   z-index: 3;
-  transition: transform 120ms ease, box-shadow 120ms ease;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .lang-toggle:hover {
@@ -468,6 +502,51 @@ a {
   margin: 0 6px;
 }
 
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.92);
+  color: #000000;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+  cursor: pointer;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.ti-sun,
+.ti-moon,
+.ti-auto {
+  display: none;
+}
+
+.theme-system .ti-auto,
+.theme-dark .ti-moon,
+.theme-light .ti-sun {
+  display: block;
+}
+
 @media (max-width: 840px) {
   .hero {
     grid-template-columns: 1fr;
@@ -475,6 +554,10 @@ a {
   .lang-toggle {
     top: 12px;
     right: 12px;
+  }
+  .theme-toggle {
+    top: 12px;
+    left: 12px;
   }
 }
 

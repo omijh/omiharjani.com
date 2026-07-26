@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR — Omi Harjani</title>
+  <meta name="theme-color" content="#0ea5e9">
   <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon-spring.svg">
   <link rel="apple-touch-icon" href="/assets/favicon-spring.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,6 +39,7 @@
       overflow: auto;
       transition: background 600ms ease;
     }
+    html { background: var(--page-gradient, var(--bg, #f7f9fc)); min-height: 100%; }
     .lang-toggle {
       position: fixed;
       top: calc(18px + var(--safe-top));
@@ -125,24 +127,42 @@
       }
     }
     @media (prefers-color-scheme: dark) {
-      :root {
+      :root:not(.theme-light) {
         --card-bg: rgba(30, 41, 59, 0.9);
         --card-border: rgba(51, 65, 85, 0.75);
         --text: #e2e8f0;
         --muted: #94a3b8;
         --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
       }
-      .lang-toggle {
+      :root:not(.theme-light) .lang-toggle {
         background: rgba(15, 23, 42, 0.95);
         color: #ffffff;
       }
-      .cta {
+      :root:not(.theme-light) .cta {
         background: rgba(14, 165, 233, 0.2);
         color: #7dd3fc;
       }
-      .qr-wrap {
+      :root:not(.theme-light) .qr-wrap {
         background: rgba(15, 23, 42, 0.5);
       }
+    }
+    .dark-mode {
+      --card-bg: rgba(30, 41, 59, 0.9);
+      --card-border: rgba(51, 65, 85, 0.75);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    }
+    .dark-mode .lang-toggle {
+      background: rgba(15, 23, 42, 0.95);
+      color: #ffffff;
+    }
+    .dark-mode .cta {
+      background: rgba(14, 165, 233, 0.2);
+      color: #7dd3fc;
+    }
+    .dark-mode .qr-wrap {
+      background: rgba(15, 23, 42, 0.5);
     }
   </style>
 </head>
@@ -166,7 +186,7 @@
       ja: { heading: 'スキャンして omiharjani.com へ', sub: 'カメラを QR に向けるか、下のボタンをタップしてください。' }
     };
     const langToggle = document.getElementById('lang-toggle');
-    let currentLang = 'en';
+    let currentLang = localStorage.getItem('lang') || 'en';
 
     function applyLanguage(lang) {
       currentLang = lang;
@@ -176,9 +196,10 @@
     }
     langToggle.addEventListener('click', () => {
       const next = currentLang === 'en' ? 'ja' : 'en';
+      localStorage.setItem('lang', next);
       applyLanguage(next);
     });
-    applyLanguage('en');
+    applyLanguage(currentLang);
     applySeason(getCurrentSeason());
   </script>
 </body>

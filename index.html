@@ -23,29 +23,38 @@
   <meta name="theme-color" content="#0ea5e9">
   <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon-spring.svg">
   <link rel="apple-touch-icon" href="/assets/favicon-spring.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+   <link rel="preload" href="/assets/pic.webp" as="image" type="image/webp" fetchpriority="high">
+   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="styles.css">
   <script defer src="/js/analytics.js"></script>
-  <script>
-    var m = new Date().getMonth() + 1;
-    var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var g;
-    if (m >= 3 && m <= 5) g = d
-      ? 'linear-gradient(135deg, #2d1528 0%, #0f1b2e 50%, #0f2e1a 100%)'
-      : 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)';
-    else if (m >= 6 && m <= 8) g = d
-      ? 'linear-gradient(135deg, #0f1528 0%, #2d1f0f 50%, #0f2e1a 100%)'
-      : 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)';
-    else if (m >= 9 && m <= 11) g = d
-      ? 'linear-gradient(135deg, #2d0f0f 0%, #2d1528 50%, #1a2e0f 100%)'
-      : 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)';
-    else g = d
-      ? 'linear-gradient(135deg, #0a102e 0%, #1a1528 50%, #0f1a3e 100%)'
-      : 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)';
-    document.documentElement.style.background = g;
-  </script>
+   <script>
+     (function () {
+       var m = new Date().getMonth() + 1;
+       var p = localStorage.getItem('theme');
+       var t = p || 'system';
+       var d = p === 'dark' || (!p && window.matchMedia('(prefers-color-scheme: dark)').matches);
+       if (d) document.documentElement.classList.add('dark-mode');
+       document.documentElement.classList.add('theme-' + t);
+       document.documentElement.style.colorScheme = d ? 'dark' : 'light';
+       var g;
+       if (m >= 3 && m <= 5) g = d
+         ? 'linear-gradient(135deg, #2d1528 0%, #0f1b2e 50%, #0f2e1a 100%)'
+         : 'linear-gradient(135deg, #ffe3f0 0%, #cfeeff 50%, #eefce5 100%)';
+       else if (m >= 6 && m <= 8) g = d
+         ? 'linear-gradient(135deg, #0f1528 0%, #2d1f0f 50%, #0f2e1a 100%)'
+         : 'linear-gradient(135deg, #d9f4ff 0%, #fff0d9 50%, #d4f7e2 100%)';
+       else if (m >= 9 && m <= 11) g = d
+         ? 'linear-gradient(135deg, #2d0f0f 0%, #2d1528 50%, #1a2e0f 100%)'
+         : 'linear-gradient(135deg, #ffe4d1 0%, #ffdff0 45%, #eef7d7 100%)';
+       else g = d
+         ? 'linear-gradient(135deg, #0a102e 0%, #1a1528 50%, #0f1a3e 100%)'
+         : 'linear-gradient(135deg, #dfe9ff 0%, #f4e9ff 50%, #eef6ff 100%)';
+       document.documentElement.style.setProperty('--page-gradient', g);
+     })();
+   </script>
 </head>
 <body>
   <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
@@ -53,6 +62,11 @@
     <span class="lang en active">EN</span>
     <span class="divider" aria-hidden="true">/</span>
     <span class="lang ja">日本語</span>
+  </button>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch colour theme">
+    <svg class="theme-icon ti-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+    <svg class="theme-icon ti-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <svg class="theme-icon ti-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 4.5 12 12l-3.5 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M19.5 19.5 12 12l3.5-7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
   </button>
   <header class="site-header">
     <div class="hero container fade-in">

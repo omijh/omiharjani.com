@@ -181,11 +181,12 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.addEventListener('click', cycleTheme);
   }
 
-  const emailLink = document.querySelector('a[href^="mailto:"]');
+  const emailLink = document.querySelector('a[data-email]');
   if (emailLink) {
+    var _user = 'omiharjani', _domain = 'gmail.com';
     emailLink.addEventListener('click', async (e) => {
       e.preventDefault();
-      const email = emailLink.getAttribute('href').replace('mailto:', '');
+      var email = _user + '@' + _domain;
       try {
         await navigator.clipboard.writeText(email);
         const toast = document.createElement('div');
@@ -198,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => toast.remove(), 200);
         }, 1200);
       } catch {
-        window.location.href = emailLink.getAttribute('href');
+        window.location.href = 'mailto:' + email;
       }
     });
   }

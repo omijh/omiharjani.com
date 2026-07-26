@@ -33,11 +33,9 @@
     const link = event.target.closest('a[href]');
     if (!link) return;
 
-    const href = link.getAttribute('href');
-    if (href.startsWith('mailto:')) {
+    if (link.hasAttribute('data-email')) {
       trackEvent('contact_click', {
         contact_method: 'email',
-        link_url: href,
       });
       return;
     }

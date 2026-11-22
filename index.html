@@ -121,13 +121,17 @@
       </div>
       <div class="hero__card">
         <div class="profile">
-          <picture>
-            <source srcset="assets/pic.webp" type="image/webp">
-            <img src="assets/pic.jpeg" alt="Portrait of Omi Harjani" class="avatar" fetchpriority="high" width="96" height="96" onerror="this.onerror=null; this.src='assets/avatar-placeholder.svg';">
-          </picture>
-          <div>
-            <div class="label" id="currently">Currently</div>
-            <div class="profile-line strong" id="profile-line1">Cloud Engineer at MetLife Japan</div>
+          <div class="profile-header">
+            <picture class="avatar-wrap">
+              <source srcset="assets/pic.webp" type="image/webp">
+              <img src="assets/pic.jpeg" alt="Portrait of Omi Harjani" class="avatar" fetchpriority="high" width="84" height="84" onerror="this.onerror=null; this.src='assets/avatar-placeholder.svg';">
+            </picture>
+            <div class="profile-heading">
+              <div class="label" id="currently">Currently</div>
+              <div class="profile-line strong" id="profile-line1">Cloud Engineer at MetLife Japan</div>
+            </div>
+          </div>
+          <div class="profile-body">
             <div class="profile-line" id="profile-line2">Building reliable Azure and Kubernetes platforms with automation.</div>
             <div class="profile-line" id="profile-line3">Always learning, testing new ideas — and building the occasional AI product.</div>
           </div>

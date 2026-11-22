@@ -8,7 +8,7 @@
   <meta name="author" content="Omi Harjani">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://omiharjani.com/">
-  <title>Omi Harjani — Cloud Engineer &amp; AI Builder</title>
+  <title>Omi Harjani — Cloud &amp; AI</title>
   <meta property="og:title" content="Omi Harjani — Cloud Engineer &amp; AI Builder in Tokyo">
   <meta property="og:description" content="Omi Harjani is a Tokyo-based cloud engineer and AI builder specializing in Azure, Kubernetes, Terraform, and AI products. Explore projects and bilingual content.">
   <meta property="og:type" content="website">
@@ -35,30 +35,42 @@
   <script defer src="/js/analytics.js"></script>
    <script>
       (function () {
-        var m = new Date().getMonth() + 1;
+        var s = null;
+        try { s = sessionStorage.getItem('season'); } catch (e) {}
+        if (!s || !/^(spring|summer|autumn|winter)$/.test(s)) {
+          var m = new Date().getMonth() + 1;
+          s = (m >= 3 && m <= 5) ? 'spring' : (m >= 6 && m <= 8) ? 'summer' : (m >= 9 && m <= 11) ? 'autumn' : 'winter';
+        }
         var p = localStorage.getItem('theme');
         var t = p || 'system';
-        var d = p === 'dark' || (!p && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        var d = p === 'dark' || ((!p || p === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches);
         if (d) document.documentElement.classList.add('dark-mode');
         document.documentElement.classList.add('theme-' + t);
+        document.documentElement.setAttribute('data-season', s);
         document.documentElement.style.colorScheme = d ? 'dark' : 'light';
         var g, a;
-        if (m >= 3 && m <= 5) {
+        if (s === 'spring') {
           g = d ? 'linear-gradient(135deg, #1a0a14 0%, #0f172a 50%, #0a2818 100%)' : 'linear-gradient(135deg, #fde8ef 0%, #f0e6ff 50%, #e6f5e8 100%)';
           a = d ? '#fb7185' : '#e11d48';
-        } else if (m >= 6 && m <= 8) {
-          g = d ? 'linear-gradient(135deg, #1a1410 0%, #0a2830 50%, #0f172a 100%)' : 'linear-gradient(135deg, #fef6e8 0%, #e6f4ff 50%, #e6f5ea 100%)';
+        } else if (s === 'summer') {
+          g = d ? 'linear-gradient(135deg, #271c09 0%, #0f2930 50%, #0f172a 100%)' : 'linear-gradient(135deg, #fff3c4 0%, #fde68a 45%, #dcfce7 100%)';
           a = d ? '#fbbf24' : '#d97706';
-        } else if (m >= 9 && m <= 11) {
+        } else if (s === 'autumn') {
           g = d ? 'linear-gradient(135deg, #1f0a0a 0%, #1a1410 50%, #2a1a0e 100%)' : 'linear-gradient(135deg, #fef0e6 0%, #fde8d8 50%, #fcf6e8 100%)';
           a = d ? '#fb923c' : '#ea580c';
         } else {
-          g = d ? 'linear-gradient(135deg, #080e2e 0%, #141438 50%, #0f1a2e 100%)' : 'linear-gradient(135deg, #f0f4ff 0%, #f0e6ff 50%, #e6f4fa 100%)';
+          g = d ? 'linear-gradient(135deg, #080e2e 0%, #141438 50%, #0f1a2e 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #dbeafe 50%, #e0f2fe 100%)';
           a = d ? '#818cf8' : '#6366f1';
         }
         document.documentElement.style.setProperty('--page-gradient', g);
         document.documentElement.style.setProperty('--accent', a);
-        document.querySelector('meta[name="theme-color"]').content = a;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = a;
+        var iconPath = '/assets/favicon-' + s + (d ? '-dark' : '') + '.svg';
+        var fav = document.getElementById('favicon');
+        if (fav) fav.href = iconPath;
+        var appIcon = document.querySelector('link[rel="apple-touch-icon"]');
+        if (appIcon) appIcon.href = iconPath;
       })();
    </script>
 </head>
@@ -80,8 +92,18 @@
         <p class="eyebrow" id="eyebrow">Cloud engineering, AI products, and hands-on experimentation.</p>
         <h1 id="name">Omi Harjani</h1>
         <div class="subtitle" id="subtitle">Cloud Engineer • AI Builder in Tokyo</div>
-        <div class="location" id="location">Tokyo, Japan</div>
+        <div class="meta-row">
+          <span class="location" id="location">Tokyo, Japan</span>
+          <span class="meta-dot" aria-hidden="true">·</span>
+          <span class="tokyo-time" id="tokyo-time" aria-label="Current time in Tokyo">JST --:--</span>
+        </div>
         <div class="status" id="status">Building Uttayo &amp; GomiHelper · Studying 日本語</div>
+        <div class="season-switcher" id="season-switcher" role="group" aria-label="Season theme">
+          <button class="season-btn" type="button" data-season="spring" id="season-spring" aria-pressed="false">🌸 <span data-season-label="spring">Spring</span></button>
+          <button class="season-btn" type="button" data-season="summer" id="season-summer" aria-pressed="false">☀️ <span data-season-label="summer">Summer</span></button>
+          <button class="season-btn" type="button" data-season="autumn" id="season-autumn" aria-pressed="false">🍂 <span data-season-label="autumn">Autumn</span></button>
+          <button class="season-btn" type="button" data-season="winter" id="season-winter" aria-pressed="false">❄️ <span data-season-label="winter">Winter</span></button>
+        </div>
         <nav class="socials" aria-label="Social links">
           <a class="icon-link" href="https://www.linkedin.com/in/supernerd" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.4 3.5a1.9 1.9 0 1 1-3.8 0 1.9 1.9 0 0 1 3.8 0ZM1.8 8.2h3.5V22H1.8zM8.6 8.2h3.3v1.9h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5V22h-3.6v-6.1c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3V22H8.6z"></path></svg>
@@ -89,20 +111,19 @@
           <a class="icon-link" href="https://github.com/omijh" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.7.5.6 5.6.6 12c0 5.1 3.3 9.5 7.9 11 .6.1.8-.3.8-.6v-2c-3.2.7-3.8-1.6-3.8-1.6-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1.9.9 2.8.9 1.4 0 2.5-.3 3-.6.1-.7.4-1.1.7-1.3-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.7 5.6-5.3 5.9.4.3.8 1 .8 2.1v3c0 .3.2.7.8.6 4.6-1.5 7.9-5.9 7.9-11C23.4 5.6 18.3.5 12 .5Z"></path></svg>
           </a>
-          <a class="icon-link" href="#" data-email="1" aria-label="Email">
+          <a class="icon-link" href="#" data-email="1" aria-label="Copy email address" title="Copy email address">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 4h17a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13A1.5 1.5 0 0 1 3.5 4Zm0 2.2V18h17V6.2L12 12.5 3.5 6.2Zm1.2-1.7 7.3 5.3 7.3-5.3h-14.6Z"></path></svg>
           </a>
           <a class="icon-link" href="https://x.com/omiharjani" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.3 8.4L22.8 22h-5.7l-4.5-5.9L6.5 22H2.3l7.8-9-7.4-9h5.8l4 5.3L18.9 2Zm-2 17.9h1.6L7.2 4.1H5.4l11.5 15.8Z"></path></svg>
           </a>
-          <a class="secret-link" href="/qr/" aria-label="QR card">QR</a>
         </nav>
       </div>
       <div class="hero__card">
         <div class="profile">
           <picture>
             <source srcset="assets/pic.webp" type="image/webp">
-            <img src="assets/pic.jpeg" alt="Portrait of Omi Harjani" class="avatar" loading="lazy" width="96" height="96" onerror="this.onerror=null; this.src='assets/avatar-placeholder.svg';">
+            <img src="assets/pic.jpeg" alt="Portrait of Omi Harjani" class="avatar" fetchpriority="high" width="96" height="96" onerror="this.onerror=null; this.src='assets/avatar-placeholder.svg';">
           </picture>
           <div>
             <div class="label" id="currently">Currently</div>
@@ -152,25 +173,62 @@
       </div>
       <div class="projects">
         <article class="card project-card">
-          <div>
+          <div class="card-content">
+            <span class="project-tag" id="uttayo-tag">AI · Marketplace</span>
             <h3>Uttayo</h3>
             <p id="uttayo-desc">A bilingual second-hand goods platform in Japan with AI-assisted pricing and an ultra-simple listing flow.</p>
+            <div class="project-chips" aria-label="Tech stack">
+              <span class="tech-chip">Next.js</span>
+              <span class="tech-chip">Supabase</span>
+              <span class="tech-chip">OpenAI</span>
+              <span class="tech-chip">EN / JA</span>
+            </div>
+            <div class="project-details" id="uttayo-details" hidden>
+              <p id="uttayo-highlights">Instant photo-to-listing generation, smart yen price suggestions from local market signals, and seamless EN/JA translation.</p>
+            </div>
           </div>
-          <a class="ghost" href="https://uttayo.com" target="_blank" rel="noopener noreferrer" id="uttayo-btn">View project</a>
+          <div class="card-actions">
+            <a class="ghost" href="https://uttayo.com" target="_blank" rel="noopener noreferrer" id="uttayo-btn">View project →</a>
+            <button class="details-toggle" type="button" aria-expanded="false" aria-controls="uttayo-details" id="uttayo-details-btn">Highlights</button>
+          </div>
         </article>
         <article class="card project-card">
-          <div>
+          <div class="card-content">
+            <span class="project-tag" id="gomi-tag">Civic Tech · Web</span>
             <h3>GomiHelper</h3>
             <p id="gomi-desc">A simple site that helps residents check trash day schedules in Japan, with a friendly mascot and clean UI.</p>
+            <div class="project-chips" aria-label="Highlights">
+              <span class="tech-chip" id="gomi-chip1">Civic Tech</span>
+              <span class="tech-chip" id="gomi-chip2">Ward Schedules</span>
+              <span class="tech-chip" id="gomi-chip3">Mascot UI</span>
+            </div>
+            <div class="project-details" id="gomi-details" hidden>
+              <p id="gomi-highlights">Built to take the guesswork out of Japanese municipal garbage sorting and pickup calendars with fast mobile lookups.</p>
+            </div>
           </div>
-          <a class="ghost" href="https://gomihelper.com" target="_blank" rel="noopener noreferrer" id="gomi-btn">View project</a>
+          <div class="card-actions">
+            <a class="ghost" href="https://gomihelper.com" target="_blank" rel="noopener noreferrer" id="gomi-btn">View project →</a>
+            <button class="details-toggle" type="button" aria-expanded="false" aria-controls="gomi-details" id="gomi-details-btn">Highlights</button>
+          </div>
         </article>
         <article class="card project-card">
-          <div>
+          <div class="card-content">
+            <span class="project-tag" id="podcast-tag">Podcast</span>
             <h3>Jonny &amp; Omi Show</h3>
             <p id="podcast-desc">A podcast chatting about startups, tech, and life in Japan.</p>
+            <div class="project-chips" aria-label="Topics">
+              <span class="tech-chip">Apple Podcasts</span>
+              <span class="tech-chip" id="podcast-chip2">Startups</span>
+              <span class="tech-chip" id="podcast-chip3">Tokyo Life</span>
+            </div>
+            <div class="project-details" id="podcast-details" hidden>
+              <p id="podcast-highlights">Candid conversations on building tech products, navigating life in Tokyo, and stories from indie makers and founders.</p>
+            </div>
           </div>
-          <a class="ghost" href="https://podcasts.apple.com/us/podcast/jonny-omi-show/id1500310491" target="_blank" rel="noopener noreferrer" id="podcast-btn">Listen →</a>
+          <div class="card-actions">
+            <a class="ghost" href="https://podcasts.apple.com/us/podcast/jonny-omi-show/id1500310491" target="_blank" rel="noopener noreferrer" id="podcast-btn">Listen →</a>
+            <button class="details-toggle" type="button" aria-expanded="false" aria-controls="podcast-details" id="podcast-details-btn">Highlights</button>
+          </div>
         </article>
       </div>
       <div class="more-link fade-in">
@@ -187,11 +245,33 @@
         <p class="footer-kicker" id="footer-kicker">Let’s connect.</p>
         <p class="footer-text" id="footer-text">Always happy to talk cloud, AI, startups, and new experiments.</p>
       </div>
+      <div class="footer-actions">
+        <a class="ghost footer-btn" href="#" data-email="1" id="footer-email-btn">Copy Email</a>
+        <a class="ghost footer-btn" href="https://www.linkedin.com/in/supernerd" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a class="ghost footer-btn" href="https://github.com/omijh" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a class="ghost footer-btn" href="/qr/" id="footer-qr-btn">QR Card</a>
+      </div>
     </div>
     <div class="container footer__bottom">
       <small>© <span id="year"></span> Omi Harjani</small>
+      <button class="cmd-hint" type="button" id="cmd-open-footer" aria-label="Open command menu">
+        <span id="cmd-hint-label">Command menu</span>
+        <kbd id="cmd-kbd">⌘K</kbd>
+      </button>
     </div>
   </footer>
+
+  <div class="cmd-backdrop" id="cmd-palette" role="dialog" aria-modal="true" aria-labelledby="cmd-input" hidden>
+    <div class="cmd-dialog">
+      <div class="cmd-header">
+        <svg class="cmd-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" class="cmd-input" id="cmd-input" placeholder="Type a command or search..." autocomplete="off" spellcheck="false">
+        <button class="cmd-esc" type="button" id="cmd-close" aria-label="Close">ESC</button>
+      </div>
+      <ul class="cmd-list" id="cmd-list" role="listbox"></ul>
+      <div class="cmd-empty" id="cmd-empty" hidden>No matching commands.</div>
+    </div>
+  </div>
 
   <script type="application/ld+json">
     {

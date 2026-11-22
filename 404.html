@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Page not found — Omi Harjani">
   <title>404 — Omi Harjani</title>
+  <meta name="theme-color" content="#0ea5e9">
   <link id="favicon" rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon-spring.svg">
   <link rel="apple-touch-icon" href="/assets/favicon-spring.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,68 +13,395 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   <script defer src="/js/analytics.js"></script>
+  <script>
+    (function () {
+      var s = null;
+      try { s = sessionStorage.getItem('season'); } catch (e) {}
+      if (!s || !/^(spring|summer|autumn|winter)$/.test(s)) {
+        var m = new Date().getMonth() + 1;
+        s = (m >= 3 && m <= 5) ? 'spring' : (m >= 6 && m <= 8) ? 'summer' : (m >= 9 && m <= 11) ? 'autumn' : 'winter';
+      }
+      var p = localStorage.getItem('theme');
+      var t = p || 'system';
+      var d = p === 'dark' || ((!p || p === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (d) document.documentElement.classList.add('dark-mode');
+      document.documentElement.classList.add('theme-' + t);
+      document.documentElement.setAttribute('data-season', s);
+      document.documentElement.style.colorScheme = d ? 'dark' : 'light';
+      var g, a;
+      if (s === 'spring') {
+        g = d ? 'linear-gradient(135deg, #1a0a14 0%, #0f172a 50%, #0a2818 100%)' : 'linear-gradient(135deg, #fde8ef 0%, #f0e6ff 50%, #e6f5e8 100%)';
+        a = d ? '#fb7185' : '#e11d48';
+      } else if (s === 'summer') {
+        g = d ? 'linear-gradient(135deg, #271c09 0%, #0f2930 50%, #0f172a 100%)' : 'linear-gradient(135deg, #fff3c4 0%, #fde68a 45%, #dcfce7 100%)';
+        a = d ? '#fbbf24' : '#d97706';
+      } else if (s === 'autumn') {
+        g = d ? 'linear-gradient(135deg, #1f0a0a 0%, #1a1410 50%, #2a1a0e 100%)' : 'linear-gradient(135deg, #fef0e6 0%, #fde8d8 50%, #fcf6e8 100%)';
+        a = d ? '#fb923c' : '#ea580c';
+      } else {
+        g = d ? 'linear-gradient(135deg, #080e2e 0%, #141438 50%, #0f1a2e 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #dbeafe 50%, #e0f2fe 100%)';
+        a = d ? '#818cf8' : '#6366f1';
+      }
+      document.documentElement.style.setProperty('--page-gradient', g);
+      document.documentElement.style.setProperty('--accent', a);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = a;
+      var iconPath = '/assets/favicon-' + s + (d ? '-dark' : '') + '.svg';
+      var fav = document.getElementById('favicon');
+      if (fav) fav.href = iconPath;
+      var appIcon = document.querySelector('link[rel="apple-touch-icon"]');
+      if (appIcon) appIcon.href = iconPath;
+    })();
+  </script>
   <style>
     .error-page {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       text-align: center;
-      padding: 32px;
+      padding: 72px 20px 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .error-card {
+      width: min(480px, 100%);
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 34px 28px 30px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .error-code {
-      font-size: clamp(72px, 20vw, 120px);
+      font-size: clamp(64px, 16vw, 96px);
       font-weight: 800;
       letter-spacing: -2px;
       margin: 0;
       line-height: 1;
+      background: linear-gradient(135deg, var(--text) 20%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .dino-stage {
+      position: relative;
+      margin: 14px 0 12px;
+      padding: 6px 14px 4px;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 18px;
+      transition: transform 0.2s ease;
+    }
+    .dino-stage:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+    .dino-bubble {
+      display: inline-block;
+      min-height: 28px;
+      padding: 5px 12px;
+      margin-bottom: 6px;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      color: var(--pill-text);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+      opacity: 0;
+      transform: translateY(4px) scale(0.95);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .dino-bubble.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .dino-svg {
+      width: 156px;
+      height: 128px;
+      display: block;
+      margin: 0 auto;
+      overflow: visible;
+    }
+    .dino-body-group {
+      animation: dinoBounce 2.8s ease-in-out infinite;
+      transform-origin: 82px 96px;
+    }
+    .dino-stage:hover .dino-body-group {
+      transform: translateY(-3px);
+    }
+    .dino-stage.is-hopping .dino-body-group {
+      animation: dinoHop 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .dino-tail {
+      transform-origin: 56px 78px;
+      animation: tailWag 2.4s ease-in-out infinite;
+    }
+    .dino-eye {
+      transform-origin: 109px 36px;
+      animation: dinoBlink 4.4s ease-in-out infinite;
+    }
+    .dino-shadow {
+      transform-origin: 78px 117px;
+      animation: shadowPulse 2.8s ease-in-out infinite;
+    }
+    .dino-qmark {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      fill: var(--pill-text);
+      animation: floatMark 2.6s ease-in-out infinite;
+    }
+    .dino-qmark--2 {
+      animation-delay: 1.1s;
+    }
+    @keyframes dinoBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes dinoHop {
+      0% { transform: translateY(0) rotate(0deg); }
+      35% { transform: translateY(-18px) rotate(-6deg); }
+      70% { transform: translateY(2px) rotate(3deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+    @keyframes tailWag {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(7deg); }
+    }
+    @keyframes dinoBlink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+    @keyframes shadowPulse {
+      0%, 100% { transform: scaleX(1); opacity: 0.22; }
+      50% { transform: scaleX(0.88); opacity: 0.14; }
+    }
+    @keyframes floatMark {
+      0%, 100% { transform: translateY(0); opacity: 0.55; }
+      50% { transform: translateY(-6px); opacity: 1; }
     }
     .error-message {
-      font-size: 20px;
-      color: var(--muted);
-      margin: 16px 0 8px;
-      max-width: 400px;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 6px 0 8px;
+      max-width: 390px;
+      line-height: 1.45;
     }
     .error-sub {
       font-size: 14px;
       color: var(--muted);
-      opacity: 0.6;
-      margin: 0 0 8px;
+      margin: 0 0 20px;
       max-width: 360px;
+      line-height: 1.5;
     }
-    .error-dino {
-      font-size: 64px;
-      line-height: 1;
-      margin: 8px 0 16px;
-      filter: grayscale(0.3);
-      transition: filter 0.3s, transform 0.3s;
-      cursor: default;
-      user-select: none;
-      animation: wobble 3s ease-in-out infinite;
-    }
-    .error-dino:hover {
-      filter: grayscale(0);
-      transform: scale(1.1);
-    }
-    @keyframes wobble {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    @media (prefers-reduced-motion: reduce) {
+      .dino-body-group,
+      .dino-tail,
+      .dino-eye,
+      .dino-shadow,
+      .dino-qmark {
+        animation: none !important;
+      }
     }
   </style>
 </head>
 <body>
+  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Toggle language">
+    <span class="sr-only">Toggle language between English and Japanese</span>
+    <span class="lang en active">EN</span>
+    <span class="divider" aria-hidden="true">/</span>
+    <span class="lang ja">日本語</span>
+  </button>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch colour theme">
+    <svg class="theme-icon ti-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+    <svg class="theme-icon ti-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <svg class="theme-icon ti-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="2" x2="12" y2="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="12" x2="4" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M17 12A7 7 0 0 1 10 19a7 7 0 0 0 7-7 7 7 0 0 0-7-7 7 7 0 0 1 7 7z" fill="currentColor" opacity="0.4"/></svg>
+  </button>
+
   <main class="error-page">
-    <h1 class="error-code">404</h1>
-    <div class="error-dino" aria-hidden="true">🦕</div>
-    <p class="error-message">That page doesn't exist — or it wandered off somewhere.</p>
-    <p class="error-sub">Don't worry, this little dinosaur is equally confused.</p>
-    <a class="ghost" href="/">Go home</a>
+    <div class="error-card">
+      <h1 class="error-code">404</h1>
+
+      <div class="dino-stage" id="dino-stage" role="button" tabindex="0" aria-label="Tap the confused dinosaur">
+        <div class="dino-bubble" id="dino-bubble" role="status" aria-live="polite"></div>
+        <svg class="dino-svg" viewBox="0 0 160 130" aria-hidden="true">
+          <ellipse class="dino-shadow" cx="78" cy="117" rx="34" ry="6" fill="currentColor" />
+
+          <text class="dino-qmark" x="132" y="34" font-size="16">?</text>
+          <text class="dino-qmark dino-qmark--2" x="78" y="24" font-size="13">?</text>
+
+          <g class="dino-body-group">
+            <!-- Tail -->
+            <g class="dino-tail">
+              <path d="M56 84 C38 86 24 79 18 68 C25 71 38 74 58 70 Z" fill="#10b981" />
+              <path d="M36 73 L41 67 L46 72 Z" fill="var(--accent)" />
+            </g>
+
+            <!-- Back leg -->
+            <rect x="61" y="92" width="12" height="19" rx="6" fill="#059669" />
+
+            <!-- Body + Neck + Head -->
+            <path d="M52 84 C52 67 66 57 82 59 L86 41 C87 28 97 22 110 22 C123 22 132 29 132 39 C132 48 124 53 114 53 L103 53 C104 62 106 72 104 83 C102 94 92 100 76 100 C61 100 52 93 52 84 Z" fill="#34d399" />
+
+            <!-- Belly highlight -->
+            <path d="M77 62 C88 62 96 69 95 82 C94 92 86 96 76 96 C69 96 66 91 66 82 C66 70 70 62 77 62 Z" fill="#a7f3d0" opacity="0.85" />
+
+            <!-- Seasonal spikes -->
+            <path d="M84 44 L77 40 L84 36 Z" fill="var(--accent)" />
+            <path d="M82 55 L74 52 L81 48 Z" fill="var(--accent)" />
+            <path d="M74 61 L67 55 L76 54 Z" fill="var(--accent)" />
+
+            <!-- Seasonal scarf -->
+            <path d="M84 53 C92 56 100 55 104 52 C105 56 104 59 102 60 C95 62 88 61 83 58 Z" fill="var(--accent)" />
+            <path d="M86 58 L81 71 L89 72 L92 59 Z" fill="var(--accent)" opacity="0.9" />
+
+            <!-- Front leg & little arm -->
+            <rect x="81" y="92" width="12" height="19" rx="6" fill="#10b981" />
+            <path d="M98 70 C106 69 111 72 110 76 C109 79 104 79 97 77 Z" fill="#10b981" />
+
+            <!-- Eye, blush & confused smile -->
+            <g class="dino-eye">
+              <ellipse cx="109" cy="36" rx="4.2" ry="4.5" fill="#0f172a" />
+              <circle cx="110.5" cy="34.5" r="1.4" fill="#ffffff" />
+            </g>
+            <ellipse cx="117" cy="43" rx="4" ry="2.2" fill="#fb7185" opacity="0.55" />
+            <path d="M114 47 Q119 45 123 47" fill="none" stroke="#065f46" stroke-width="1.8" stroke-linecap="round" />
+          </g>
+        </svg>
+      </div>
+
+      <p class="error-message" id="error-message">That page doesn't exist — or it wandered off somewhere.</p>
+      <p class="error-sub" id="error-sub">Don't worry, this little dinosaur is equally confused. (Tap the dino!)</p>
+      <a class="ghost" id="error-home" href="/">← Back home</a>
+    </div>
   </main>
+
   <script src="/js/theme.js"></script>
   <script>
+    const errorTranslations = {
+      en: {
+        message: "That page doesn't exist — or it wandered off somewhere.",
+        sub: "Don't worry, this little dinosaur is equally confused. (Tap the dino!)",
+        home: '← Back home',
+        dinoLabel: 'Tap the confused dinosaur',
+        langLabel: 'Toggle language between English and Japanese',
+        themePrefix: 'Theme',
+        themeHint: 'click to switch',
+        themeLabels: { system: 'Auto', dark: 'Dark', light: 'Light' },
+        quips: [
+          'ROAR? (404 not found)',
+          'Checked Azure & AKS... not in this cluster!',
+          "Maybe it's listed on Uttayo?",
+          "Still exploring Tokyo's missing links..."
+        ]
+      },
+      ja: {
+        message: 'お探しのページが見つかりませんでした。',
+        sub: 'ご心配なく、この小さな恐竜も同じくらい困惑しています。（恐竜をタップ！）',
+        home: '← ホームへ戻る',
+        dinoLabel: '迷子の恐竜をタップ',
+        langLabel: '英語と日本語の表示を切り替え',
+        themePrefix: 'テーマ',
+        themeHint: 'クリックで切り替え',
+        themeLabels: { system: '自動', dark: 'ダーク', light: 'ライト' },
+        quips: [
+          'ガオー？（404 見つかりません）',
+          'Azure と AKS を探したけど見つからず…',
+          'Uttayo に出品されてるかも？',
+          '迷子になっちゃった…'
+        ]
+      }
+    };
+
+    const themeOrder = ['system', 'light', 'dark'];
+    let currentLang = 'en';
+    let quipIndex = 0;
+    let bubbleTimer = null;
+
+    function updateThemeLabel(mode) {
+      const btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      const t = errorTranslations[currentLang] || errorTranslations.en;
+      const label = (t.themeLabels && t.themeLabels[mode]) || 'Auto';
+      btn.setAttribute('aria-label', `${t.themePrefix}: ${label}`);
+      btn.setAttribute('title', `${t.themePrefix}: ${label} (${t.themeHint})`);
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const t = errorTranslations[lang] || errorTranslations.en;
+      document.getElementById('error-message').textContent = t.message;
+      document.getElementById('error-sub').textContent = t.sub;
+      document.getElementById('error-home').textContent = t.home;
+      document.getElementById('dino-stage').setAttribute('aria-label', t.dinoLabel);
+      document.getElementById('lang-toggle').setAttribute('aria-label', t.langLabel);
+      document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
+
+      const enSpan = document.querySelector('#lang-toggle .en');
+      const jaSpan = document.querySelector('#lang-toggle .ja');
+      if (enSpan && jaSpan) {
+        enSpan.classList.toggle('active', lang === 'en');
+        jaSpan.classList.toggle('active', lang === 'ja');
+      }
+      updateThemeLabel(getPreferredTheme());
+    }
+
+    function triggerDinoReaction() {
+      const stage = document.getElementById('dino-stage');
+      const bubble = document.getElementById('dino-bubble');
+      const t = errorTranslations[currentLang] || errorTranslations.en;
+
+      stage.classList.remove('is-hopping');
+      void stage.offsetWidth;
+      stage.classList.add('is-hopping');
+
+      bubble.textContent = t.quips[quipIndex % t.quips.length];
+      quipIndex += 1;
+      bubble.classList.add('visible');
+
+      clearTimeout(bubbleTimer);
+      bubbleTimer = setTimeout(() => {
+        bubble.classList.remove('visible');
+      }, 2800);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       applySeason(getCurrentSeason());
+
+      const savedLang = localStorage.getItem('lang');
+      const browserLang = (navigator.language || '').toLowerCase().startsWith('ja') ? 'ja' : 'en';
+      currentLang = savedLang === 'en' || savedLang === 'ja' ? savedLang : browserLang;
+      applyLanguage(currentLang);
+
+      document.getElementById('lang-toggle').addEventListener('click', () => {
+        const next = currentLang === 'en' ? 'ja' : 'en';
+        localStorage.setItem('lang', next);
+        applyLanguage(next);
+      });
+
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        const current = getPreferredTheme();
+        const next = themeOrder[(themeOrder.indexOf(current) + 1) % themeOrder.length];
+        if (next === 'system') localStorage.removeItem('theme');
+        else localStorage.setItem('theme', next);
+        applySeason(getCurrentSeason());
+        updateThemeLabel(next);
+      });
+
+      const dinoStage = document.getElementById('dino-stage');
+      dinoStage.addEventListener('click', triggerDinoReaction);
+      dinoStage.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerDinoReaction();
+        }
+      });
     });
   </script>
 </body>

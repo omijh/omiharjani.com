@@ -9,8 +9,48 @@
   <link rel="apple-touch-icon" href="/assets/favicon-spring.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script defer src="/js/analytics.js"></script>
+  <script>
+    (function () {
+      var s = null;
+      try { s = sessionStorage.getItem('season'); } catch (e) {}
+      if (!s || !/^(spring|summer|autumn|winter)$/.test(s)) {
+        var m = new Date().getMonth() + 1;
+        s = (m >= 3 && m <= 5) ? 'spring' : (m >= 6 && m <= 8) ? 'summer' : (m >= 9 && m <= 11) ? 'autumn' : 'winter';
+      }
+      var p = localStorage.getItem('theme');
+      var t = p || 'system';
+      var d = p === 'dark' || ((!p || p === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (d) document.documentElement.classList.add('dark-mode');
+      document.documentElement.classList.add('theme-' + t);
+      document.documentElement.setAttribute('data-season', s);
+      document.documentElement.style.colorScheme = d ? 'dark' : 'light';
+      var g, a;
+      if (s === 'spring') {
+        g = d ? 'linear-gradient(135deg, #1a0a14 0%, #0f172a 50%, #0a2818 100%)' : 'linear-gradient(135deg, #fde8ef 0%, #f0e6ff 50%, #e6f5e8 100%)';
+        a = d ? '#fb7185' : '#e11d48';
+      } else if (s === 'summer') {
+        g = d ? 'linear-gradient(135deg, #271c09 0%, #0f2930 50%, #0f172a 100%)' : 'linear-gradient(135deg, #fff3c4 0%, #fde68a 45%, #dcfce7 100%)';
+        a = d ? '#fbbf24' : '#d97706';
+      } else if (s === 'autumn') {
+        g = d ? 'linear-gradient(135deg, #1f0a0a 0%, #1a1410 50%, #2a1a0e 100%)' : 'linear-gradient(135deg, #fef0e6 0%, #fde8d8 50%, #fcf6e8 100%)';
+        a = d ? '#fb923c' : '#ea580c';
+      } else {
+        g = d ? 'linear-gradient(135deg, #080e2e 0%, #141438 50%, #0f1a2e 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #dbeafe 50%, #e0f2fe 100%)';
+        a = d ? '#818cf8' : '#6366f1';
+      }
+      document.documentElement.style.setProperty('--page-gradient', g);
+      document.documentElement.style.setProperty('--accent', a);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = a;
+      var iconPath = '/assets/favicon-' + s + (d ? '-dark' : '') + '.svg';
+      var fav = document.getElementById('favicon');
+      if (fav) fav.href = iconPath;
+      var appIcon = document.querySelector('link[rel="apple-touch-icon"]');
+      if (appIcon) appIcon.href = iconPath;
+    })();
+  </script>
   <style>
     :root {
       color-scheme: light dark;
@@ -18,19 +58,19 @@
       --safe-right: env(safe-area-inset-right, 0px);
       --safe-left: env(safe-area-inset-left, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --card-border: rgba(255, 255, 255, 0.75);
+      --card-bg: rgba(255, 255, 255, 0.86);
+      --card-border: rgba(255, 255, 255, 0.78);
       --text: #0a0c14;
-      --muted: #1f2a3a;
+      --muted: #334155;
       --accent: #0ea5e9;
-      --shadow: 0 24px 80px rgba(8, 15, 33, 0.28);
+      --shadow: 0 24px 80px rgba(8, 15, 33, 0.22);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
       padding: calc(22px + var(--safe-top)) calc(22px + var(--safe-right)) calc(22px + var(--safe-bottom)) calc(22px + var(--safe-left));
-      font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Manrope', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -40,6 +80,66 @@
       transition: background 600ms ease;
     }
     html { background: var(--page-gradient, var(--bg, #f7f9fc)); min-height: 100%; }
+    .ambient-edges {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .ambient-lane {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: clamp(36px, calc((100vw - 640px) / 2), 260px);
+      overflow: visible;
+    }
+    .ambient-lane--left { left: 0; }
+    .ambient-lane--right { right: 0; }
+    .ambient-sunshine {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 26% 55% at 0% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
+        radial-gradient(ellipse 26% 55% at 100% 12%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);
+      animation: sunBreathe 9s ease-in-out infinite alternate;
+    }
+    @keyframes sunBreathe {
+      0% { opacity: 0.45; }
+      100% { opacity: 0.85; }
+    }
+    .ambient-particle {
+      position: absolute;
+      top: -32px;
+      display: block;
+      opacity: 0;
+      will-change: transform, opacity;
+      animation: ambientFall var(--fall-duration, 18s) linear var(--fall-delay, 0s) infinite;
+    }
+    .ambient-particle--summer { animation-name: ambientFallSun; }
+    .ambient-particle--winter { animation-name: ambientFallSnow; }
+    @keyframes ambientFall {
+      0% { transform: translate3d(0, -5vh, 0) rotate(0deg); opacity: 0; }
+      10% { opacity: var(--particle-opacity, 0.5); }
+      35% { transform: translate3d(var(--sway-x, 14px), 32vh, 0) rotate(calc(var(--spin-deg, 140deg) * 0.35)) rotateX(35deg); }
+      68% { transform: translate3d(calc(var(--sway-x, 14px) * -0.8), 68vh, 0) rotate(calc(var(--spin-deg, 140deg) * 0.7)) rotateY(30deg); }
+      90% { opacity: var(--particle-opacity, 0.5); }
+      100% { transform: translate3d(calc(var(--sway-x, 14px) * 0.4), 108vh, 0) rotate(var(--spin-deg, 140deg)); opacity: 0; }
+    }
+    @keyframes ambientFallSun {
+      0% { transform: translate3d(0, -4vh, 0) scale(0.85); opacity: 0; }
+      15% { opacity: var(--particle-opacity, 0.45); }
+      50% { transform: translate3d(var(--sway-x, 10px), 48vh, 0) scale(1.12); opacity: calc(var(--particle-opacity, 0.45) * 1.15); }
+      85% { opacity: var(--particle-opacity, 0.45); }
+      100% { transform: translate3d(calc(var(--sway-x, 10px) * -0.4), 106vh, 0) scale(0.9); opacity: 0; }
+    }
+    @keyframes ambientFallSnow {
+      0% { transform: translate3d(0, -4vh, 0) rotate(0deg); opacity: 0; }
+      12% { opacity: var(--particle-opacity, 0.55); }
+      50% { transform: translate3d(var(--sway-x, 12px), 50vh, 0) rotate(calc(var(--spin-deg, 90deg) * 0.5)); }
+      88% { opacity: var(--particle-opacity, 0.55); }
+      100% { transform: translate3d(calc(var(--sway-x, 12px) * -0.5), 106vh, 0) rotate(var(--spin-deg, 90deg)); opacity: 0; }
+    }
     .lang-toggle {
       position: fixed;
       top: calc(18px + var(--safe-top));
@@ -47,18 +147,20 @@
       padding: 10px 14px;
       border-radius: 12px;
       border: 1px solid var(--card-border);
-      background: rgba(10, 12, 20, 0.08);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       color: #000000;
       font-weight: 800;
       transition: transform 120ms ease, box-shadow 120ms ease;
       letter-spacing: 0.2px;
-      box-shadow: 0 10px 24px rgba(8, 15, 33, 0.18);
+      box-shadow: 0 10px 24px rgba(8, 15, 33, 0.14);
       cursor: pointer;
       z-index: 2;
     }
     .lang-toggle:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 26px rgba(8, 15, 33, 0.22);
+      box-shadow: 0 12px 26px rgba(8, 15, 33, 0.2);
     }
     .lang-toggle:focus-visible {
       outline: 2px solid var(--accent);
@@ -71,10 +173,12 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       box-shadow: var(--shadow);
       text-align: center;
       position: relative;
       overflow: hidden;
+      z-index: 1;
     }
     .glow {
       position: absolute;
@@ -83,7 +187,7 @@
                   radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.25), transparent 50%);
       pointer-events: none;
     }
-    h1 { margin: 0 0 12px; letter-spacing: -0.4px; color: var(--text); }
+    h1 { margin: 0 0 10px; letter-spacing: -0.4px; color: var(--text); }
     p { margin: 0 0 18px; color: var(--muted); }
     .qr-wrap {
       background: rgba(255, 255, 255, 0.94);
@@ -94,75 +198,137 @@
       box-shadow: 0 14px 36px rgba(8, 15, 33, 0.18);
     }
     .qr-wrap img {
-      width: 260px;
-      height: 260px;
+      width: 240px;
+      height: 240px;
       border-radius: 12px;
     }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
     .cta {
+      appearance: none;
+      font-family: inherit;
+      font-size: 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: 16px;
-      padding: 12px 16px;
+      padding: 11px 16px;
       border-radius: 12px;
-      border: 1px solid var(--card-border);
-      background: rgba(14, 165, 233, 0.12);
-      color: #0b4c6b;
+      border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: color-mix(in srgb, var(--accent) 70%, var(--text));
       font-weight: 800;
       text-decoration: none;
-      box-shadow: 0 10px 22px rgba(14, 165, 233, 0.15);
+      cursor: pointer;
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--accent) 16%, transparent);
+      transition: transform 120ms ease, box-shadow 120ms ease, background-color 0.25s ease, border-color 0.25s ease;
+    }
+    .cta-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+    .cta:hover {
+      transform: translateY(-1px);
+      background: color-mix(in srgb, var(--accent) 18%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+      box-shadow: 0 12px 26px color-mix(in srgb, var(--accent) 24%, transparent);
+    }
+    .cta-primary:hover {
+      background: color-mix(in srgb, var(--accent) 88%, #000000);
+      border-color: var(--accent);
+    }
+    .cta:focus-visible,
+    .back-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .back-wrap {
+      margin-top: 18px;
+    }
+    .back-link {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+    .back-link:hover {
+      color: var(--text);
+    }
+    @media (max-width: 768px) {
+      .ambient-edges { opacity: 0.45; }
+      .ambient-lane { width: 24px; }
+      .ambient-particle:nth-child(n + 5) { display: none; }
     }
     @media (max-width: 540px) {
       body { padding: calc(16px + var(--safe-top)) calc(16px + var(--safe-right)) calc(16px + var(--safe-bottom)) calc(16px + var(--safe-left)); align-items: center; }
-      main { padding: 24px; }
-      .qr-wrap img { width: 220px; height: 220px; }
+      main { padding: 24px; width: calc(100% - 16px); }
+      .qr-wrap img { width: 200px; height: 200px; }
       h1 { font-size: 22px; }
       p { font-size: 14px; }
       .lang-toggle {
-        top: 12px;
-        left: 12px;
+        top: calc(12px + var(--safe-top));
+        right: calc(12px + var(--safe-right));
+        left: auto;
         padding: 8px 10px;
         font-size: 13px;
       }
     }
+    @media (prefers-reduced-motion: reduce) {
+      .ambient-edges { display: none !important; }
+      .ambient-particle, .ambient-sunshine { animation: none !important; }
+    }
     @media (prefers-color-scheme: dark) {
       :root:not(.theme-light) {
-        --card-bg: rgba(30, 41, 59, 0.9);
-        --card-border: rgba(51, 65, 85, 0.75);
+        --card-bg: rgba(30, 41, 59, 0.86);
+        --card-border: rgba(148, 163, 184, 0.18);
         --text: #e2e8f0;
         --muted: #94a3b8;
         --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
       }
       :root:not(.theme-light) .lang-toggle {
-        background: rgba(15, 23, 42, 0.95);
+        background: rgba(15, 23, 42, 0.85);
         color: #ffffff;
       }
       :root:not(.theme-light) .cta {
-        background: rgba(14, 165, 233, 0.2);
-        color: #7dd3fc;
+        background: color-mix(in srgb, var(--accent) 16%, transparent);
+        color: color-mix(in srgb, var(--accent) 85%, #ffffff);
+      }
+      :root:not(.theme-light) .cta-primary {
+        background: var(--accent);
+        color: #0b1220;
       }
       :root:not(.theme-light) .qr-wrap {
-        background: rgba(15, 23, 42, 0.5);
+        background: rgba(255, 255, 255, 0.94);
       }
     }
     .dark-mode {
-      --card-bg: rgba(30, 41, 59, 0.9);
-      --card-border: rgba(51, 65, 85, 0.75);
+      --card-bg: rgba(30, 41, 59, 0.86);
+      --card-border: rgba(148, 163, 184, 0.18);
       --text: #e2e8f0;
       --muted: #94a3b8;
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
     }
     .dark-mode .lang-toggle {
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.85);
       color: #ffffff;
     }
     .dark-mode .cta {
-      background: rgba(14, 165, 233, 0.2);
-      color: #7dd3fc;
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
+      color: color-mix(in srgb, var(--accent) 85%, #ffffff);
+    }
+    .dark-mode .cta-primary {
+      background: var(--accent);
+      color: #0b1220;
     }
     .dark-mode .qr-wrap {
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(255, 255, 255, 0.94);
     }
   </style>
 </head>
@@ -171,34 +337,104 @@
   <main>
     <div class="glow" aria-hidden="true"></div>
     <h1 id="heading">Scan to visit omiharjani.com</h1>
-    <p id="sub">Point your camera at the code or tap below to open the site.</p>
+    <p id="sub">Point your camera at the code or use the quick actions below.</p>
     <div class="qr-wrap">
       <img src="../assets/qr-code.png" alt="QR code for omiharjani.com">
     </div>
-    <div>
-      <a class="cta" href="https://omiharjani.com">Open omiharjani.com</a>
+    <div class="actions">
+      <button class="cta cta-primary" type="button" id="save-vcf">Save Contact (.vcf)</button>
+      <button class="cta" type="button" id="copy-link">Copy Link</button>
+      <a class="cta" id="cta" href="https://omiharjani.com">Open site →</a>
+    </div>
+    <div class="back-wrap">
+      <a class="back-link" id="back-link" href="/">← Back to portfolio</a>
     </div>
   </main>
   <script src="../js/theme.js"></script>
   <script>
     const translations = {
-      en: { heading: 'Scan to visit omiharjani.com', sub: 'Point your camera at the code or tap below to open the site.' },
-      ja: { heading: 'スキャンして omiharjani.com へ', sub: 'カメラを QR に向けるか、下のボタンをタップしてください。' }
+      en: {
+        heading: 'Scan to visit omiharjani.com',
+        sub: 'Point your camera at the code or use the quick actions below.',
+        saveVcf: 'Save Contact (.vcf)',
+        copyLink: 'Copy Link',
+        copiedLink: 'Copied!',
+        cta: 'Open site →',
+        backLink: '← Back to portfolio'
+      },
+      ja: {
+        heading: 'スキャンして omiharjani.com へ',
+        sub: 'カメラで QR を読み取るか、下のボタンからアクセスしてください。',
+        saveVcf: '連絡先を保存 (.vcf)',
+        copyLink: 'リンクをコピー',
+        copiedLink: 'コピーしました！',
+        cta: 'サイトを開く →',
+        backLink: '← ポートフォリオへ戻る'
+      }
     };
     const langToggle = document.getElementById('lang-toggle');
-    let currentLang = localStorage.getItem('lang') || 'en';
+    const savedLang = localStorage.getItem('lang');
+    const browserLang = (navigator.language || '').toLowerCase().startsWith('ja') ? 'ja' : 'en';
+    let currentLang = savedLang === 'en' || savedLang === 'ja' ? savedLang : browserLang;
 
     function applyLanguage(lang) {
       currentLang = lang;
-      document.getElementById('heading').textContent = translations[lang].heading;
-      document.getElementById('sub').textContent = translations[lang].sub;
+      const t = translations[lang];
+      document.getElementById('heading').textContent = t.heading;
+      document.getElementById('sub').textContent = t.sub;
+      document.getElementById('save-vcf').textContent = t.saveVcf;
+      document.getElementById('copy-link').textContent = t.copyLink;
+      document.getElementById('cta').textContent = t.cta;
+      document.getElementById('back-link').textContent = t.backLink;
       document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
     }
+
     langToggle.addEventListener('click', () => {
       const next = currentLang === 'en' ? 'ja' : 'en';
       localStorage.setItem('lang', next);
       applyLanguage(next);
     });
+
+    document.getElementById('save-vcf').addEventListener('click', () => {
+      const email = ['omiharjani', 'gmail.com'].join('@');
+      const vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'N:Harjani;Omi;;;',
+        'FN:Omi Harjani',
+        'ORG:MetLife Japan',
+        'TITLE:Cloud Engineer & AI Builder',
+        'EMAIL;TYPE=INTERNET:' + email,
+        'URL:https://omiharjani.com',
+        'X-SOCIALPROFILE;type=linkedin:https://www.linkedin.com/in/supernerd',
+        'X-SOCIALPROFILE;type=github:https://github.com/omijh',
+        'ADR;TYPE=HOME:;;Tokyo;;Japan',
+        'END:VCARD'
+      ].join('\r\n');
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'omi-harjani.vcf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    const copyBtn = document.getElementById('copy-link');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText('https://omiharjani.com');
+        copyBtn.textContent = translations[currentLang].copiedLink;
+        setTimeout(() => {
+          copyBtn.textContent = translations[currentLang].copyLink;
+        }, 1400);
+      } catch {
+        window.location.href = 'https://omiharjani.com';
+      }
+    });
+
     applyLanguage(currentLang);
     applySeason(getCurrentSeason());
   </script>

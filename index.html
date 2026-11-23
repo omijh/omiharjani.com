@@ -97,7 +97,7 @@
           <span class="meta-dot" aria-hidden="true">·</span>
           <span class="tokyo-time" id="tokyo-time" aria-label="Current time in Tokyo">JST --:--</span>
         </div>
-        <div class="status" id="status">Building Uttayo &amp; GomiHelper · Studying 日本語</div>
+        <div class="status" id="status">Building GomiHelper &amp; Last Mochi Standing · Studying 日本語</div>
         <div class="season-switcher" id="season-switcher" role="group" aria-label="Season theme">
           <button class="season-btn" type="button" data-season="spring" id="season-spring" aria-pressed="false">🌸 <span data-season-label="spring">Spring</span></button>
           <button class="season-btn" type="button" data-season="summer" id="season-summer" aria-pressed="false">☀️ <span data-season-label="summer">Summer</span></button>
@@ -138,40 +138,32 @@
   </header>
 
   <main>
-    <section class="section container fade-in" aria-labelledby="about">
-      <div class="section__header">
-        <h2 id="about">About</h2>
-      </div>
-      <div class="body-text about-lines">
-        <span id="about-line1">Builder mindset — I love making things that are genuinely useful.</span>
-        <span id="about-line2">Cloud engineer by day, AI product maker by night. I share what I learn.</span>
-        <span id="about-line3">Right now: AI‑powered tools + bilingual second‑hand marketplace for Japan (Uttayo).</span>
-        <span id="about-line4">Outside work: exploring Tokyo neighborhoods and brushing up my Japanese.</span>
-      </div>
-    </section>
-    <div class="container section-divider"></div>
-
-    <section class="section container fade-in" aria-labelledby="what-i-do">
-      <div class="section__header">
-        <h2 id="what-i-do">What I Do</h2>
-      </div>
-      <div class="pill-grid">
-        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2 7h12" stroke="currentColor" stroke-width="1.3"/><rect x="5" y="9" width="6" height="1.5" rx=".5" fill="currentColor" opacity=".6"/></svg><span data-pill="pill1">Azure</span></span>
-        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><line x1="3" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1"/><line x1="8" y1="3" x2="8" y2="13" stroke="currentColor" stroke-width="1"/></svg><span data-pill="pill2">AKS &amp; Containers</span></span>
-        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 1-4.5 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 1v3H5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-pill="pill3">Terraform &amp; IaC</span></span>
-        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/></svg><span data-pill="pill4">Next.js &amp; React</span></span>
-        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><polygon points="10,1 3,9 7,9 6,15 13,7 9,7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span data-pill="pill5">Supabase</span></span>
-        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="1.5" fill="currentColor"/><path d="M8 3a5 5 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 3a5 5 0 0 0 0 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".5"/></svg><span data-pill="pill6">AI / LLM Apps</span></span>
-        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 11a3 3 0 0 0-.5-5.96 4 4 0 0 0-7-.5A2.5 2.5 0 0 0 4 10.5h8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span data-pill="pill7">AWS</span></span>
-      </div>
-    </section>
-    <div class="container section-divider"></div>
-
     <section class="section container fade-in" aria-labelledby="projects">
       <div class="section__header">
         <h2 id="projects">Projects</h2>
       </div>
       <div class="projects">
+        <article class="card project-card">
+          <div class="card-content">
+            <span class="project-tag" id="mochi-tag">Game · Local Co-op</span>
+            <h3><svg class="project-icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="15.5" rx="9" ry="6.5" fill="#fffaf5" stroke="#d6bfb0" stroke-width="1.4"/><path d="M9.5 9.2c0-2.1 1.2-3.7 2.5-3.7s2.5 1.6 2.5 3.7c0 1.4-1.1 2.1-2.5 2.1s-2.5-.7-2.5-2.1Z" fill="#f43f5e"/><path d="M10.2 6.2c.6-.9 1.3-1.4 1.8-1.5.5.1 1.2.6 1.8 1.5-.8.2-1.3.2-1.8 0-.5.2-1 .2-1.8 0Z" fill="#22c55e"/><circle cx="9.2" cy="15.6" r="1" fill="#3b2f2f"/><circle cx="14.8" cy="15.6" r="1" fill="#3b2f2f"/><path d="M10.8 17.2c.7.6 1.7.6 2.4 0" fill="none" stroke="#3b2f2f" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="7.4" cy="16.8" rx="1.2" ry="0.7" fill="#fda4af" opacity="0.75"/><ellipse cx="16.6" cy="16.8" rx="1.2" ry="0.7" fill="#fda4af" opacity="0.75"/></svg>Last Mochi Standing</h3>
+            <p id="mochi-desc">A cute 2–4 player single-screen party game built for office breaks — drop snack bombs, bounce mochi, and outlast your friends.</p>
+            <div class="project-chips" aria-label="Highlights">
+              <span class="tech-chip">HTML5 Canvas</span>
+              <span class="tech-chip" id="mochi-chip2">2–4 Players</span>
+              <span class="tech-chip" id="mochi-chip3">Gamepad</span>
+              <span class="tech-chip">EN / JA</span>
+            </div>
+            <div class="project-details" id="mochi-details" hidden>
+              <p id="mochi-highlights">Zero-install browser play with shared keyboard &amp; Gamepad API support, smart bots, Flavor Alchemy combos, and a Tokyo café conveyor arena.</p>
+            </div>
+          </div>
+          <div class="card-actions">
+            <a class="ghost" href="https://mochi.omiharjani.com/" target="_blank" rel="noopener noreferrer" id="mochi-btn">Play now →</a>
+            <button class="details-toggle" type="button" aria-expanded="false" aria-controls="mochi-details" id="mochi-details-btn">Highlights</button>
+          </div>
+        </article>
+        <!-- Hidden for now while inactive
         <article class="card project-card">
           <div class="card-content">
             <span class="project-tag" id="uttayo-tag">AI · Marketplace</span>
@@ -192,6 +184,7 @@
             <button class="details-toggle" type="button" aria-expanded="false" aria-controls="uttayo-details" id="uttayo-details-btn">Highlights</button>
           </div>
         </article>
+        -->
         <article class="card project-card">
           <div class="card-content">
             <span class="project-tag" id="gomi-tag">Civic Tech · Web</span>
@@ -233,6 +226,35 @@
       </div>
       <div class="more-link fade-in">
         <a href="https://github.com/omijh" target="_blank" rel="noopener noreferrer" id="more-link">More on GitHub →</a>
+      </div>
+    </section>
+    <div class="container section-divider"></div>
+
+    <section class="section container fade-in" aria-labelledby="what-i-do">
+      <div class="section__header">
+        <h2 id="what-i-do">What I Do</h2>
+      </div>
+      <div class="pill-grid">
+        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2 7h12" stroke="currentColor" stroke-width="1.3"/><rect x="5" y="9" width="6" height="1.5" rx=".5" fill="currentColor" opacity=".6"/></svg><span data-pill="pill1">Azure</span></span>
+        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><line x1="3" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1"/><line x1="8" y1="3" x2="8" y2="13" stroke="currentColor" stroke-width="1"/></svg><span data-pill="pill2">AKS &amp; Containers</span></span>
+        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 1-4.5 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 1v3H5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-pill="pill3">Terraform &amp; IaC</span></span>
+        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/></svg><span data-pill="pill4">Next.js &amp; React</span></span>
+        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><polygon points="10,1 3,9 7,9 6,15 13,7 9,7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span data-pill="pill5">Supabase</span></span>
+        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="1.5" fill="currentColor"/><path d="M8 3a5 5 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 3a5 5 0 0 0 0 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".5"/></svg><span data-pill="pill6">AI / LLM Apps</span></span>
+        <span class="pill"><svg class="pill-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 11a3 3 0 0 0-.5-5.96 4 4 0 0 0-7-.5A2.5 2.5 0 0 0 4 10.5h8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span data-pill="pill7">AWS</span></span>
+      </div>
+    </section>
+    <div class="container section-divider"></div>
+
+    <section class="section container fade-in" aria-labelledby="about">
+      <div class="section__header">
+        <h2 id="about">About</h2>
+      </div>
+      <div class="body-text about-lines">
+        <span id="about-line1">Builder mindset — I love making things that are genuinely useful.</span>
+        <span id="about-line2">Cloud engineer by day, AI product maker by night. I share what I learn.</span>
+        <span id="about-line3">Right now: AI‑powered tools, civic web apps, and playful browser games.</span>
+        <span id="about-line4">Outside work: exploring Tokyo neighborhoods and brushing up my Japanese.</span>
       </div>
     </section>
     <div class="container section-divider"></div>
@@ -297,7 +319,8 @@
         "https://www.linkedin.com/in/supernerd",
         "https://github.com/omijh",
         "https://x.com/omiharjani",
-        "https://uttayo.com"
+        "https://uttayo.com",
+        "https://mochi.omiharjani.com/"
       ],
       "address": {
         "@type": "PostalAddress",

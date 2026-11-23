@@ -622,7 +622,7 @@ a {
 .projects {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .card {
@@ -667,6 +667,15 @@ a {
 .card h3 {
   margin: 0 0 8px;
   font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
 }
 
 .card p {
@@ -1216,6 +1225,12 @@ a {
 @media (max-width: 1220px) {
   .site-header {
     padding-top: 68px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .projects {
+    grid-template-columns: 1fr;
   }
 }
 

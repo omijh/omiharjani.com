@@ -31,6 +31,11 @@ jobs:
           npx --yes terser js/theme.js -o js/theme.js --compress --mangle
           npx --yes terser js/analytics.js -o js/analytics.js --compress --mangle
 
+      - name: Stamp cache-busting version on assets
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          sed -i -E "s/(styles\.css|script\.js|theme\.js|analytics\.js)(\?v=[a-zA-Z0-9_-]+)?/\1?v=${SHORT_SHA}/g" index.html 404.html qr/index.html
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:

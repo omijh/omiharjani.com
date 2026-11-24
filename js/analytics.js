@@ -40,12 +40,16 @@
       return;
     }
 
-    const url = new URL(link.href, window.location.href);
-    if (url.hostname !== window.location.hostname) {
-      trackEvent('outbound_link_click', {
-        link_url: url.href,
-        link_domain: url.hostname,
-      });
+    try {
+      const url = new URL(link.href, window.location.href);
+      if ((url.protocol === 'http:' || url.protocol === 'https:') && url.hostname !== window.location.hostname) {
+        trackEvent('outbound_link_click', {
+          link_url: url.href,
+          link_domain: url.hostname,
+        });
+      }
+    } catch {
+      // Ignore malformed href values
     }
   });
 }());

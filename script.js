@@ -54,7 +54,7 @@ const translations = {
     emailCopied: 'Email copied to clipboard!',
     themePrefix: 'Theme',
     themeHint: 'click to switch',
-    themeLabels: { system: 'Auto', dark: 'Dark', light: 'Light' },
+    themeLabels: { dark: 'Dark', light: 'Light' },
     seasonGroupLabel: 'Season theme',
     seasonLabels: { spring: 'Spring', summer: 'Summer', autumn: 'Autumn', winter: 'Winter' },
     cmdPlaceholder: 'Type a command or search...',
@@ -134,7 +134,7 @@ const translations = {
     emailCopied: 'メールアドレスをコピーしました！',
     themePrefix: 'テーマ',
     themeHint: 'クリックで切り替え',
-    themeLabels: { system: '自動', dark: 'ダーク', light: 'ライト' },
+    themeLabels: { dark: 'ダーク', light: 'ライト' },
     seasonGroupLabel: '季節テーマ',
     seasonLabels: { spring: '春', summer: '夏', autumn: '秋', winter: '冬' },
     cmdPlaceholder: 'コマンドを検索...',
@@ -207,7 +207,6 @@ const fieldMappings = [
 
 const aboutLineIds = ['about-line1', 'about-line2', 'about-line3', 'about-line4'];
 const pillNames = ['pill1', 'pill2', 'pill3', 'pill4', 'pill5', 'pill6', 'pill7'];
-const themeOrder = ['system', 'light', 'dark'];
 
 let activeLang = 'en';
 
@@ -270,6 +269,11 @@ function applyLanguage(lang) {
     cmdFooterTrigger.setAttribute('aria-label', t.cmdOpenLabel);
   }
 
+  const cmdPalette = document.getElementById('cmd-palette');
+  if (cmdPalette && t.cmdHintLabel) {
+    cmdPalette.setAttribute('aria-label', t.cmdHintLabel);
+  }
+
   const enSpan = document.querySelector('#lang-toggle .en');
   const jaSpan = document.querySelector('#lang-toggle .ja');
   if (enSpan && jaSpan) {
@@ -320,7 +324,7 @@ function updateThemeLabel(mode, lang) {
   const btn = document.getElementById('theme-toggle');
   if (!btn) return;
   const t = translations[lang || activeLang] || translations.en;
-  const label = (t.themeLabels && t.themeLabels[mode]) || 'Auto';
+  const label = (t.themeLabels && t.themeLabels[mode]) || 'Light';
   const prefix = t.themePrefix || 'Theme';
   const hint = t.themeHint || 'click to switch';
   btn.setAttribute('aria-label', `${prefix}: ${label}`);
@@ -328,14 +332,10 @@ function updateThemeLabel(mode, lang) {
 }
 
 function cycleTheme() {
-  const current = getPreferredTheme();
-  const idx = themeOrder.indexOf(current);
-  const next = themeOrder[(idx + 1) % themeOrder.length];
-  if (next === 'system') {
-    localStorage.removeItem('theme');
-  } else {
+  const next = isDarkMode() ? 'light' : 'dark';
+  try {
     localStorage.setItem('theme', next);
-  }
+  } catch {}
   applySeason(getCurrentSeason());
   updateThemeLabel(next, activeLang);
 }
@@ -392,6 +392,7 @@ function setupSeasonSwitcher() {
     if (event.detail && event.detail.season) {
       syncSeasonButtons(event.detail.season);
     }
+    updateThemeLabel(getPreferredTheme(), activeLang);
   });
 }
 
@@ -598,6 +599,18 @@ function setupCommandPalette(toggleLangFn) {
 
   backdrop.addEventListener('click', (e) => {
     if (e.target === backdrop) closePalette();
+  });
+
+  backdrop.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || backdrop.hidden) return;
+    if (!closeBtn) return;
+    if (e.shiftKey && document.activeElement === input) {
+      e.preventDefault();
+      closeBtn.focus();
+    } else if (!e.shiftKey && document.activeElement === closeBtn) {
+      e.preventDefault();
+      input.focus();
+    }
   });
 
   if (closeBtn) closeBtn.addEventListener('click', closePalette);

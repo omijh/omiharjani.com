@@ -64,15 +64,20 @@ function setSeasonOverride(seasonKey) {
   applySeason(seasonKey);
 }
 
-function getPreferredTheme() {
-  return localStorage.getItem('theme') || 'system';
-}
-
 function isDarkMode() {
-  var t = getPreferredTheme();
+  var t = null;
+  try {
+    t = localStorage.getItem('theme');
+  } catch (e) {
+    // Ignore storage errors
+  }
   if (t === 'dark') return true;
   if (t === 'light') return false;
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+function getPreferredTheme() {
+  return isDarkMode() ? 'dark' : 'light';
 }
 
 var lastParticleKey = '';
@@ -347,9 +352,8 @@ function applySeason(seasonKey) {
   if (meta) meta.content = dark ? season.accentDark : season.accent;
 
   var root = document.documentElement;
-  var theme = getPreferredTheme();
   root.classList.remove('theme-system', 'theme-dark', 'theme-light');
-  root.classList.add('theme-' + theme);
+  root.classList.add(dark ? 'theme-dark' : 'theme-light');
   root.classList.toggle('dark-mode', dark);
   root.style.colorScheme = dark ? 'dark' : 'light';
 
@@ -371,7 +375,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 var darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
 darkModeMedia.addEventListener('change', function () {
-  if (getPreferredTheme() === 'system') {
+  var saved = null;
+  try {
+    saved = localStorage.getItem('theme');
+  } catch (e) {}
+  if (saved !== 'dark' && saved !== 'light') {
     applySeason(getCurrentSeason());
   }
 });
